@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color-scheme: light;
+    --color-background: 248 250 252;
+    --color-surface: 255 255 255;
+    --color-card: 243 246 250;
+    --color-border: 221 229 238;
+    --color-ink: 15 23 42;
+    --color-muted: 99 115 129;
+    --color-primary: 23 55 94;
+    --color-primary-foreground: 232 240 248;
+    --color-accent: 12 124 117;
+    --color-accent-foreground: 229 245 243;
+    --color-highlight: 240 248 255;
+    --color-success: 22 101 52;
+    --color-warning: 168 96 8;
+    --color-danger: 190 24 24;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 10px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@layer base {
+    body {
+        background-color: rgb(var(--color-background));
+        color: rgb(var(--color-ink));
+        font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+        line-height: 1.7;
+        min-height: 100vh;
+        text-rendering: optimizeLegibility;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-display), "Playfair Display", "Times New Roman", serif;
+        color: rgb(var(--color-ink));
+        letter-spacing: -0.01em;
+    }
+
+    a {
+        @apply underline-offset-4 transition-colors;
+        color: rgb(var(--color-primary));
+    }
+
+    a:hover {
+        color: rgb(var(--color-accent));
+    }
+
+    :focus-visible {
+        outline: 3px solid rgba(var(--color-primary), 0.35);
+        outline-offset: 2px;
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

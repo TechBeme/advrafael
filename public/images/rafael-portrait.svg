@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Retrato ilustrado de profissional do direito</title>
+  <desc id="desc">Figura estilizada com fundo em tons de azul e verde, representando um advogado.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#17375e"/>
+      <stop offset="100%" stop-color="#0c7c75"/>
+    </linearGradient>
+    <linearGradient id="suit" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#dbe7f5" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)" rx="32"/>
+  <circle cx="400" cy="260" r="120" fill="#f3f6fa"/>
+  <path d="M400 200c50 0 90 40 90 100 0 60-40 100-90 100s-90-40-90-100c0-60 40-100 90-100z" fill="#f1f4f8"/>
+  <path d="M320 360c20 22 48 36 80 36s60-14 80-36v24c0 44-36 80-80 80s-80-36-80-80z" fill="#e7edf7"/>
+  <path d="M230 566c0-94 73-170 170-170s170 76 170 170v44H230z" fill="url(#suit)"/>
+  <path d="M400 396c-60 0-110 32-140 82 38 28 86 44 140 44s102-16 140-44c-30-50-80-82-140-82z" fill="#0f243f" opacity="0.08"/>
+  <path d="M320 558c0-44 36-80 80-80s80 36 80 80v52H320z" fill="#17375e"/>
+  <path d="M400 478c-18 0-34 6-48 16 12 8 29 12 48 12s36-4 48-12c-14-10-30-16-48-16z" fill="#0c7c75" opacity="0.8"/>
+  <circle cx="360" cy="250" r="10" fill="#d1d9e8"/>
+  <circle cx="440" cy="250" r="10" fill="#d1d9e8"/>
+  <path d="M360 304c12 10 26 16 40 16s28-6 40-16" fill="none" stroke="#c0cadb" stroke-width="6" stroke-linecap="round"/>
+  <rect x="300" y="624" width="200" height="36" rx="10" fill="#0c7c75" opacity="0.9"/>
+  <text x="400" y="650" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#f3f6fa">Advocacia Cível e do Consumidor</text>
+</svg>

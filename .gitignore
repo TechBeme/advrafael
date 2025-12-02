@@ -1,0 +1,29 @@
+# Node/Next artifacts
+node_modules
+.next
+.turbo
+.vercel
+.cache
+coverage
+dist
+out
+
+# Env and local config
+.env
+.env.*
+!.env.example
+
+# Testing/artifacts
+test-results
+playwright-report
+blob-report
+*.log
+
+# Tooling/local state
+.DS_Store
+*.swp
+*.swo
+
+# AI/sandbox workspace
+.codex
+.specify
