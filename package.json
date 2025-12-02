@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
+    "motion": "^12.23.25",
     "next": "16.0.6",
     "next-mdx-remote": "^5.0.0",
     "nodemailer": "^7.0.11",

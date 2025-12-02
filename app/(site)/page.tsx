@@ -4,11 +4,11 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { HomeHero } from "@/components/content/HomeHero";
 import { practiceAreas } from "@/content/areas";
-import { values } from "@/content/bio";
 import { faqItems } from "@/content/faq";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { buttonClasses } from "@/components/ui/Button";
+import { FadeIn, StaggerFadeIn } from "@/components/ui/Animate";
 import { getFeaturedArticles } from "@/lib/content";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
@@ -19,6 +19,21 @@ export const metadata = buildMetadata({
 
 const WHATSAPP_LINK =
     "https://wa.me/5531990000000?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20conversa.";
+
+const processSteps = [
+    {
+        title: "Triagem rápida",
+        description: "Resumo do caso, prazos e documentos essenciais para entender o cenário.",
+    },
+    {
+        title: "Estratégia alinhada",
+        description: "Mapeamento de riscos, caminhos possíveis e cronograma de execução.",
+    },
+    {
+        title: "Execução com ritmo",
+        description: "Negociação preparada ou litígio, com acompanhamento claro e ajustes contínuos.",
+    },
+];
 
 export default async function HomePage() {
     const featuredArticles = await getFeaturedArticles(2);
@@ -41,9 +56,9 @@ export default async function HomePage() {
                             </Link>
                         }
                     />
-                    <div className="grid gap-6 md:grid-cols-2">
+                    <StaggerFadeIn className="grid gap-6 md:grid-cols-2">
                         {practiceAreas.map((area) => (
-                            <Card key={area.slug}>
+                            <Card key={area.slug} className="border-border bg-white/90 shadow-soft">
                                 <CardHeader
                                     eyebrow="Atuação principal"
                                     title={area.title}
@@ -62,7 +77,7 @@ export default async function HomePage() {
                                 </CardContent>
                             </Card>
                         ))}
-                    </div>
+                    </StaggerFadeIn>
                 </Container>
             </Section>
 
@@ -81,16 +96,16 @@ export default async function HomePage() {
                             </Link>
                         }
                     />
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <StaggerFadeIn className="grid gap-4 md:grid-cols-2">
                         {featuredArticles.length === 0 ? (
                             <p className="text-sm text-muted">
                                 Os primeiros textos estão sendo preparados e entrarão em breve.
                             </p>
                         ) : (
                             featuredArticles.map((article) => (
-                                <Card key={article.slug}>
+                                <Card key={article.slug} className="bg-white/90 shadow-soft">
                                     <CardHeader
-                                        eyebrow="Rascunho editorial"
+                                        eyebrow="Em destaque"
                                         title={article.title}
                                         description={article.description}
                                     />
@@ -109,48 +124,60 @@ export default async function HomePage() {
                                 </Card>
                             ))
                         )}
-                    </div>
+                    </StaggerFadeIn>
                 </Container>
             </Section>
 
             <Section className="pb-16">
                 <Container className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-start" id="sobre">
-                    <Card>
-                        <CardHeader
-                            eyebrow="Sobre"
-                            title="Quem atende"
-                            description="Atuação direta do advogado, com atendimento enxuto e comunicação objetiva."
-                        />
-                        <CardContent className="mt-4 space-y-2 text-sm text-muted">
-                            <p>
-                                Rafael Vieira atende demandas cíveis e consumeristas em Belo Horizonte
-                                e Minas Gerais, com possibilidade de reuniões on-line. A condução dos
-                                casos é acompanhada de explicação de riscos, estimativa de prazos e
-                                cuidados com provas.
-                            </p>
-                            <Link
-                                href="/sobre"
-                                className={buttonClasses({ variant: "primary", size: "sm" })}
-                            >
-                                Conhecer trajetória
-                            </Link>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader
-                            eyebrow="Postura"
-                            title="Compromissos do escritório"
-                            description="Valores que orientam o atendimento diário."
-                        />
-                        <CardContent className="mt-4 space-y-3">
-                            {values.map((item) => (
-                                <div key={item.title} className="rounded-md bg-highlight/70 p-3">
-                                    <p className="text-sm font-semibold text-ink">{item.title}</p>
-                                    <p className="text-sm text-muted">{item.description}</p>
-                                </div>
-                            ))}
-                        </CardContent>
-                    </Card>
+                    <FadeIn>
+                        <Card className="bg-white/90 shadow-soft">
+                            <CardHeader
+                                eyebrow="Sobre"
+                                title="Quem atende"
+                                description="Atuação direta do advogado, com atendimento enxuto e comunicação objetiva."
+                            />
+                            <CardContent className="mt-4 space-y-3 text-sm text-muted">
+                                <p>
+                                    Rafael Vieira atende demandas cíveis e consumeristas em Belo Horizonte
+                                    e Minas Gerais, com possibilidade de reuniões on-line. A condução dos
+                                    casos privilegia previsibilidade, qualidade de prova e estratégia ajustada
+                                    ao objetivo do cliente.
+                                </p>
+                                <Link
+                                    href="/sobre"
+                                    className={buttonClasses({ variant: "primary", size: "sm" })}
+                                >
+                                    Conhecer trajetória
+                                </Link>
+                            </CardContent>
+                        </Card>
+                    </FadeIn>
+                    <FadeIn delay={0.1}>
+                        <Card className="bg-white/90 shadow-soft">
+                            <CardHeader
+                                eyebrow="Como trabalhamos"
+                                title="Processo com ritmo"
+                                description="Passos claros para sair do problema e evoluir com segurança."
+                            />
+                            <CardContent className="mt-4 space-y-3">
+                                {processSteps.map((item, index) => (
+                                    <div
+                                        key={item.title}
+                                        className="flex gap-3 rounded-md bg-highlight/70 px-3 py-3"
+                                    >
+                                        <span className="mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+                                            {index + 1}
+                                        </span>
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-semibold text-ink">{item.title}</p>
+                                            <p className="text-sm text-muted">{item.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </CardContent>
+                        </Card>
+                    </FadeIn>
                 </Container>
             </Section>
 
