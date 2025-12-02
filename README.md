@@ -16,7 +16,7 @@ Aplicação Next.js 16 (App Router) com TypeScript e Tailwind para o site instit
 
 ## Variáveis de ambiente
 Defina em `.env.local` (veja `.env.example`):
-- `NEXT_PUBLIC_SITE_URL` — URL canônica (ex.: `https://rafaelvieira.adv.br`)
+- `NEXT_PUBLIC_SITE_URL` — URL canônica (ex.: `https://advrafael.com.br`)
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE` — transporte SMTP opcional
 - `MAIL_FROM`, `MAIL_TO` — remetente/destino do formulário
 

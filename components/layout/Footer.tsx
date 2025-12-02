@@ -13,7 +13,7 @@ const NAV_ITEMS = [
 ];
 
 const CONTACT = {
-    email: "contato@rafaelvieira.adv.br",
+    email: "contato@advrafael.com.br",
     whatsapp: "https://wa.me/5531990000000?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20conversa.",
     phoneDisplay: "(31) 99000-0000",
 };

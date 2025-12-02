@@ -5,7 +5,7 @@ export const siteConfig = {
     shortName: "Rafael Vieira",
     description:
         "Orientação jurídica em Direito Cível e do Consumidor, com linguagem clara, ética profissional e foco em soluções proporcionais.",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://rafaelvieira.adv.br",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://advrafael.com.br",
     ogImage: "/og-default.svg",
 };
 
