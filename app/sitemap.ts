@@ -7,9 +7,7 @@ export default async function sitemap() {
     const staticRoutes = [
         "",
         "/sobre",
-        "/areas",
         "/artigos",
-        "/faq",
         "/contato",
         "/politica-de-privacidade",
     ];
