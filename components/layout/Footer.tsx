@@ -54,7 +54,7 @@ export default function Footer() {
 
                 <div className="space-y-3">
                     <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">
-                        Contato seguro
+                        Contato
                     </h4>
                     <div className="space-y-2 text-sm text-ink">
                         <div className="inline-flex items-center gap-3 rounded-lg border border-border bg-white px-3 py-2 shadow-sm">
@@ -83,10 +83,6 @@ export default function Footer() {
                                 WhatsApp {CONTACT.phoneDisplay}
                             </a>
                         </div>
-                        <p className="text-xs text-muted">
-                            As mensagens são lidas com cuidado e tratadas de forma confidencial. Evite
-                            compartilhar dados sensíveis antes da análise inicial.
-                        </p>
                     </div>
                 </div>
             </Container>
