@@ -4,10 +4,10 @@ import { Container } from "../ui/Section";
 import { buttonClasses } from "../ui/Button";
 
 const NAV_ITEMS = [
-    { href: "/sobre", label: "Sobre" },
-    { href: "/areas", label: "Áreas de atuação" },
+    { href: "/#sobre", label: "Sobre" },
+    { href: "/#areas", label: "Áreas de atuação" },
     { href: "/artigos", label: "Artigos" },
-    { href: "/faq", label: "FAQ" },
+    { href: "/#faq", label: "FAQ" },
     { href: "/contato", label: "Contato" },
     { href: "/politica-de-privacidade", label: "Política de Privacidade" },
 ];

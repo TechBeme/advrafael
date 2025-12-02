@@ -5,6 +5,7 @@ import { ptBR } from "date-fns/locale";
 import { HomeHero } from "@/components/content/HomeHero";
 import { practiceAreas } from "@/content/areas";
 import { values } from "@/content/bio";
+import { faqItems } from "@/content/faq";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { buttonClasses } from "@/components/ui/Button";
@@ -25,18 +26,18 @@ export default async function HomePage() {
         <>
             <HomeHero whatsappLink={WHATSAPP_LINK} />
 
-            <Section className="pb-6">
+            <Section className="pb-6" id="areas">
                 <Container className="space-y-8">
                     <SectionHeader
                         eyebrow="Áreas em destaque"
                         title="Cível e Consumidor com atenção às particularidades de cada caso"
-                        description="Atendimentos sob medida para prevenir litígios, estruturar provas e conduzir negociações responsáveis."
+                        description="Atendimento sob medida para prevenir litígios, estruturar provas e conduzir negociações responsáveis."
                         actions={
                             <Link
-                                href="/areas"
+                                href="#contato"
                                 className={buttonClasses({ variant: "secondary", size: "sm" })}
                             >
-                                Ver todas as áreas
+                                Falar sobre um caso
                             </Link>
                         }
                     />
@@ -65,7 +66,7 @@ export default async function HomePage() {
                 </Container>
             </Section>
 
-            <Section className="pb-6">
+            <Section className="pb-6" id="artigos">
                 <Container className="space-y-6">
                     <SectionHeader
                         eyebrow="Conteúdo"
@@ -113,7 +114,7 @@ export default async function HomePage() {
             </Section>
 
             <Section className="pb-16">
-                <Container className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-start">
+                <Container className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-start" id="sobre">
                     <Card>
                         <CardHeader
                             eyebrow="Sobre"
@@ -148,6 +149,92 @@ export default async function HomePage() {
                                     <p className="text-sm text-muted">{item.description}</p>
                                 </div>
                             ))}
+                        </CardContent>
+                    </Card>
+                </Container>
+            </Section>
+
+            <Section className="pb-16" id="faq">
+                <Container className="space-y-6">
+                    <SectionHeader
+                        eyebrow="FAQ"
+                        title="Dúvidas rápidas"
+                        description="Respostas curtas sobre atendimento, documentos e expectativas."
+                        actions={
+                            <Link
+                                href="/faq"
+                                className={buttonClasses({ variant: "secondary", size: "sm" })}
+                            >
+                                Ver todas
+                            </Link>
+                        }
+                    />
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {faqItems.slice(0, 4).map((item) => (
+                            <Card key={item.question}>
+                                <CardHeader title={item.question} />
+                                <CardContent className="text-sm text-muted">
+                                    <p>{item.answer}</p>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </Container>
+            </Section>
+
+            <Section className="pb-20" id="contato">
+                <Container className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+                    <div className="space-y-4">
+                        <SectionHeader
+                            eyebrow="Contato"
+                            title="Vamos conversar"
+                            description="Relato rápido do caso, retorno ágil e alinhamento inicial para seguirmos com segurança."
+                            actions={
+                                <div className="flex flex-wrap gap-3">
+                                    <Link
+                                        href="/contato"
+                                        className={buttonClasses({ variant: "primary", size: "md" })}
+                                    >
+                                        Formulário de contato
+                                    </Link>
+                                    <a
+                                        className={buttonClasses({ variant: "secondary", size: "md" })}
+                                        href={WHATSAPP_LINK}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="Abrir conversa no WhatsApp"
+                                    >
+                                        WhatsApp direto
+                                    </a>
+                                </div>
+                            }
+                        />
+                    </div>
+                    <Card>
+                        <CardHeader
+                            eyebrow="Belo Horizonte / MG"
+                            title="Atendimento sob agendamento"
+                            description="Reuniões presenciais ou on-line, com foco em entender documentos, prazos e alternativas."
+                        />
+                        <CardContent className="space-y-3 text-sm text-muted">
+                            <p>Envie um resumo pelo formulário ou chame no WhatsApp.</p>
+                            <p>Retorno com próximos passos e documentos necessários.</p>
+                            <div className="flex flex-wrap gap-2">
+                                <a
+                                    className={buttonClasses({ variant: "secondary", size: "sm" })}
+                                    href="mailto:contato@advrafael.com.br"
+                                >
+                                    contato@advrafael.com.br
+                                </a>
+                                <a
+                                    className={buttonClasses({ variant: "ghost", size: "sm" })}
+                                    href={WHATSAPP_LINK}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    WhatsApp
+                                </a>
+                            </div>
                         </CardContent>
                     </Card>
                 </Container>
