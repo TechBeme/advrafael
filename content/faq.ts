@@ -25,7 +25,7 @@ export const faqItems: FAQItem[] = [
     {
         question: "Como são tratados prazos e expectativas?",
         answer:
-            "Cada caso possui prazos e riscos próprios. As expectativas são alinhadas com transparência, sem garantias de resultado e com atualização ao longo do andamento.",
+            "Cada caso possui prazos e riscos próprios. As expectativas são alinhadas com transparência e atualização ao longo do andamento.",
         category: "Expectativas",
         requiresApproval: true,
     },

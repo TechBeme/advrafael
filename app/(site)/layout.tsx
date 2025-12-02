@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { InformationalNotice } from "@/components/layout/InformationalNotice";
 
 type SiteLayoutProps = {
     children: ReactNode;
@@ -17,7 +16,6 @@ export default function SiteLayout({ children }: SiteLayoutProps) {
                 Pular para o conteúdo principal
             </a>
             <Header />
-            <InformationalNotice />
             <main id="conteudo-principal" className="flex-1 bg-gradient-to-b from-highlight/30 via-background to-background">
                 {children}
             </main>

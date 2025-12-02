@@ -13,5 +13,4 @@ test("lista artigos e abre detalhe", async ({ page }) => {
     await expect(
         page.getByRole("heading", { name: "Como organizar documentos para um caso de consumo" }),
     ).toBeVisible();
-    await expect(page.getByText("caráter geral", { exact: false })).toBeVisible();
 });

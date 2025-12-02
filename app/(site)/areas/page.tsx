@@ -2,7 +2,6 @@ import Link from "next/link";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
-import { Alert } from "@/components/ui/Alert";
 import { buttonClasses } from "@/components/ui/Button";
 import { practiceAreas } from "@/content/areas";
 import { buildMetadata } from "@/lib/seo";
@@ -25,13 +24,6 @@ export default function AreasPage() {
 
             <Section className="pb-6">
                 <Container className="space-y-4">
-                    <Alert tone="info" title="Aviso">
-                        <p>
-                            Os exemplos abaixo são ilustrativos e não representam promessa de
-                            resultado. Cada caso passa por triagem individual para definição de
-                            estratégia e viabilidade.
-                        </p>
-                    </Alert>
                     <SectionHeader
                         eyebrow="Situações comuns"
                         title="Temas tratados com frequência"

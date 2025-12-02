@@ -15,7 +15,7 @@ export const values = [
     {
         title: "Clareza e previsibilidade",
         description:
-            "Explicação objetiva de cenários, prazos e custos, sem prometer resultados. Planejamento conjunto com o cliente.",
+            "Explicação objetiva de cenários, prazos e custos. Planejamento conjunto com o cliente.",
     },
     {
         title: "Postura ética",

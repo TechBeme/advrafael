@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Prose } from "@/components/content/Prose";
 import { Container, Section } from "@/components/ui/Section";
-import { Alert } from "@/components/ui/Alert";
 import { Badge } from "@/components/ui/Badge";
 import { buttonClasses } from "@/components/ui/Button";
 import { getArticleBySlug, getArticlesIndex } from "@/lib/content";
@@ -81,9 +80,6 @@ export default async function ArticlePage({
                         </nav>
 
                         <div className="space-y-3">
-                            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted">
-                                Conteúdo informativo
-                            </p>
                             <h1 className="text-3xl font-semibold leading-tight text-ink md:text-4xl">
                                 {meta.title}
                             </h1>
@@ -112,25 +108,12 @@ export default async function ArticlePage({
                             </div>
                         </div>
 
-                        <Alert tone="info" title="Importante">
-                            <p>
-                                Este artigo tem caráter geral. Para decisões específicas, considere a
-                                análise individual do caso e a formalização de orientação profissional.
-                            </p>
-                        </Alert>
                     </Container>
                 </Section>
 
                 <Section className="pt-0">
                     <Container className="space-y-8">
                         <Prose>{content}</Prose>
-
-                        <Alert tone="warning" title="Aviso">
-                            <p>
-                                O conteúdo acima não constitui promessa de resultado. Procure orientação
-                                personalizada para avaliar riscos, custos e alternativas no seu caso.
-                            </p>
-                        </Alert>
 
                         <div className="flex flex-wrap gap-3">
                             <Link

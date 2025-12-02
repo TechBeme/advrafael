@@ -1,4 +1,3 @@
-import { Alert } from "@/components/ui/Alert";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
@@ -29,8 +28,7 @@ const sections = [
 
 export const metadata = buildMetadata({
     title: "Política de Privacidade",
-    description:
-        "Resumo sobre coleta mínima, finalidade e segurança dos dados enviados pelo site de contato de Rafael Vieira.",
+    description: "Resumo sobre coleta mínima, finalidade e segurança dos dados enviados pelo site.",
     path: "/politica-de-privacidade",
 });
 
@@ -40,17 +38,10 @@ export default function PoliticaPage() {
             <PageHeader
                 kicker="Proteção de dados"
                 title="Política de Privacidade"
-                description="Rascunho informativo sobre coleta mínima, finalidade e cuidados com os dados enviados pelo site."
+                description="Coleta mínima, finalidade e cuidados com os dados enviados pelo site."
             />
             <Section className="pb-6">
                 <Container className="space-y-4">
-                    <Alert tone="info" title="Conteúdo depende de aprovação do advogado">
-                        <p>
-                            O texto abaixo é preliminar e será validado pelo advogado responsável
-                            antes da publicação definitiva, para garantir aderência à LGPD e à ética
-                            profissional.
-                        </p>
-                    </Alert>
                     <SectionHeader
                         eyebrow="Transparência"
                         title="Como os dados são tratados"

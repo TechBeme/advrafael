@@ -1,4 +1,3 @@
-import { Alert } from "@/components/ui/Alert";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -7,8 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
     title: "FAQ",
-    description:
-        "Perguntas e respostas sobre atendimento, documentação e expectativas, com caráter informativo e revisão do advogado.",
+    description: "Perguntas e respostas sobre atendimento, documentação e expectativas.",
     path: "/faq",
 });
 
@@ -23,12 +21,6 @@ export default function FaqPage() {
 
             <Section className="pb-6">
                 <Container className="space-y-4">
-                    <Alert tone="info" title="Conteúdo depende de validação do advogado">
-                        <p>
-                            Cada resposta está redigida em tom informativo e será confirmada pelo
-                            advogado antes de publicação definitiva, sem promessas de resultado.
-                        </p>
-                    </Alert>
                     <SectionHeader
                         eyebrow="Dúvidas comuns"
                         title="Esclarecimentos iniciais"
@@ -40,9 +32,6 @@ export default function FaqPage() {
                                 <CardContent className="space-y-2">
                                     <p className="text-sm font-semibold text-ink">{item.question}</p>
                                     <p className="text-sm text-muted">{item.answer}</p>
-                                    <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        Resposta informativa · Revisão pendente
-                                    </p>
                                 </CardContent>
                             </Card>
                         ))}

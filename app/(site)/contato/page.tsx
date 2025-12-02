@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import { Alert } from "@/components/ui/Alert";
 import { Container, Section } from "@/components/ui/Section";
 import { buttonClasses } from "@/components/ui/Button";
 import { ContactForm } from "@/components/content/ContactForm";
@@ -10,8 +8,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
     title: "Contato",
-    description:
-        "Formulário validado e canais diretos para agendar atendimento com Rafael Vieira, sem promessas de resultado.",
+    description: "Formulário validado e canais diretos para agendar atendimento com Rafael Vieira.",
     path: "/contato",
 });
 
@@ -27,17 +24,10 @@ export default function ContatoPage() {
             <PageHeader
                 kicker="Atendimento sob agendamento"
                 title="Contato"
-                description="Envie uma mensagem ou utilize os canais diretos. O retorno ocorre após triagem inicial, sem promessa de resultado."
+                description="Envie uma mensagem ou utilize os canais diretos. O retorno ocorre após triagem inicial."
             />
             <Section>
                 <Container className="space-y-4">
-                    <Alert tone="info" title="Revisão necessária pelo advogado">
-                        <p>
-                            Textos do formulário e avisos de privacidade serão confirmados pelo
-                            advogado responsável antes de publicação definitiva, para garantir aderência
-                            à ética profissional e à LGPD.
-                        </p>
-                    </Alert>
                     <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
                         <Card>
                             <CardHeader
@@ -80,17 +70,6 @@ export default function ContatoPage() {
                                     <PhoneIcon className="h-5 w-5" aria-hidden="true" />
                                     WhatsApp {CONTACT.phoneDisplay}
                                 </a>
-                                <p className="text-xs text-muted">
-                                    Ao enviar mensagens, descreva apenas o necessário para a triagem
-                                    inicial. Consulte a{" "}
-                                    <Link
-                                        className="text-ink underline underline-offset-4 hover:text-primary"
-                                        href="/politica-de-privacidade"
-                                    >
-                                        Política de Privacidade
-                                    </Link>{" "}
-                                    para entender como os dados são tratados.
-                                </p>
                             </CardContent>
                         </Card>
                     </div>

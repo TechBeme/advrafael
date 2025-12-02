@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
     ArrowRightIcon,
     CheckCircleIcon,
-    ShieldCheckIcon,
     PhoneIcon,
 } from "@heroicons/react/24/outline";
 import { Section, Container } from "../ui/Section";
@@ -67,11 +66,6 @@ export function HomeHero({ whatsappLink }: HomeHeroProps) {
                             </li>
                         ))}
                     </ul>
-                    <p className="flex items-center gap-2 text-sm text-muted">
-                        <ShieldCheckIcon className="h-5 w-5 text-primary" aria-hidden="true" />
-                        Conteúdo informativo e sóbrio. Cada caso exige análise individual e aceite
-                        formal antes de qualquer atuação.
-                    </p>
                 </div>
 
                 <Card className="overflow-hidden p-0">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { HomeHero } from "@/components/content/HomeHero";
@@ -69,8 +69,8 @@ export default async function HomePage() {
                 <Container className="space-y-6">
                     <SectionHeader
                         eyebrow="Conteúdo"
-                        title="Artigos informativos em preparação"
-                        description="Textos educativos serão publicados com avisos de caráter geral e revisão do advogado."
+                        title="Artigos e materiais"
+                        description="Textos em linguagem clara sobre temas cíveis e do consumidor."
                         actions={
                             <Link
                                 href="/artigos"
@@ -109,7 +109,6 @@ export default async function HomePage() {
                             ))
                         )}
                     </div>
-                    <AlertNote />
                 </Container>
             </Section>
 
@@ -154,20 +153,5 @@ export default async function HomePage() {
                 </Container>
             </Section>
         </>
-    );
-}
-
-function AlertNote() {
-    return (
-        <div className="flex items-start gap-2 rounded-lg border border-border bg-white px-4 py-3 text-sm text-muted shadow-sm">
-            <ShieldCheckIcon className="h-5 w-5 text-primary" aria-hidden="true" />
-            <div className="space-y-1">
-                <p className="font-semibold text-ink">Aviso importante</p>
-                <p>
-                    Os textos são informativos e não substituem consulta jurídica individual. O
-                    conteúdo final será revisado pelo advogado responsável antes de publicação.
-                </p>
-            </div>
-        </div>
     );
 }

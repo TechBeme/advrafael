@@ -60,8 +60,8 @@ export function ContactForm() {
             {status === "success" ? (
                 <Alert tone="success" title="Contato recebido">
                     <p>
-                        Obrigado por enviar as informações. O retorno será feito após a triagem
-                        inicial, sem promessa de resultado.
+                        Obrigado por enviar as informações. Em breve retornaremos com a confirmação do
+                        atendimento.
                     </p>
                 </Alert>
             ) : null}
@@ -161,11 +161,6 @@ export function ContactForm() {
                         {...register("message")}
                     />
                 </FormField>
-
-                <p className="text-xs text-muted">
-                    Este formulário é informativo e não cria relação advogado-cliente. Os dados serão
-                    usados apenas para retorno do contato, conforme Política de Privacidade.
-                </p>
 
                 <Button type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
                     {isSubmitting ? "Enviando..." : "Enviar contato"}

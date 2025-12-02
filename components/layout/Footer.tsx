@@ -92,10 +92,6 @@ export default function Footer() {
             </Container>
             <div className="border-t border-border/70 bg-card/70">
                 <Container className="flex flex-col gap-2 py-4 text-xs text-muted md:flex-row md:items-center md:justify-between">
-                    <p>
-                        Conteúdo meramente informativo e educacional. O envio de mensagens ou
-                        formulários não estabelece relação advogado-cliente.
-                    </p>
                     <p>© {new Date().getFullYear()} Rafael Vieira. Todos os direitos reservados.</p>
                 </Container>
             </div>

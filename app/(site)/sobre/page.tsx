@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Alert } from "@/components/ui/Alert";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
@@ -29,13 +28,6 @@ export default function SobrePage() {
 
             <Section className="pb-10">
                 <Container className="space-y-4">
-                    <Alert tone="info" title="Conteúdo em revisão do advogado">
-                        <p>
-                            Texto biográfico elaborado em linguagem informativa. Publicação final
-                            depende de aprovação do profissional responsável, conforme Código de Ética
-                            da OAB.
-                        </p>
-                    </Alert>
                     <Card>
                         <CardHeader
                             title="Atuação e forma de trabalho"
@@ -115,8 +107,8 @@ export default function SobrePage() {
                         />
                         <CardContent className="mt-4 space-y-3 text-sm text-muted">
                             <p>
-                                A comunicação segue o Código de Ética da OAB e evita qualquer promessa
-                                de resultado. Dados sensíveis só são solicitados quando necessários e
+                                A comunicação segue o Código de Ética da OAB, com linguagem clara e
+                                transparente. Dados sensíveis só são solicitados quando necessários e
                                 mediante consentimento informado.
                             </p>
                             <p>
