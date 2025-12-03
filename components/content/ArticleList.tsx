@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { FiCalendar, FiClock } from "react-icons/fi";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Card, CardContent, CardHeader } from "../ui/Card";
@@ -29,12 +29,12 @@ export function ArticleList({ articles }: ArticleListProps) {
                     />
                     <CardContent className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted">
                         <span className="inline-flex items-center gap-1">
-                            <CalendarIcon className="h-4 w-4" aria-hidden="true" />
+                            <FiCalendar className="h-4 w-4" aria-hidden="true" />
                             {format(new Date(article.date), "dd/MM/yyyy", { locale: ptBR })}
                         </span>
                         {article.readingTime ? (
                             <span className="inline-flex items-center gap-1">
-                                <ClockIcon className="h-4 w-4" aria-hidden="true" />
+                                <FiClock className="h-4 w-4" aria-hidden="true" />
                                 {article.readingTime}
                             </span>
                         ) : null}

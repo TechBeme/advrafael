@@ -1,4 +1,5 @@
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { FiMail } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Container, Section } from "@/components/ui/Section";
@@ -52,8 +53,8 @@ export default function ContatoPage() {
                                         fullWidth: true,
                                     })}
                                     href={`mailto:${CONTACT.email}`}
-                                >
-                                    <EnvelopeIcon className="h-5 w-5" aria-hidden="true" />
+                            >
+                                    <FiMail className="h-5 w-5" aria-hidden="true" />
                                     {CONTACT.email}
                                 </a>
                                 <a
@@ -67,7 +68,7 @@ export default function ContatoPage() {
                                     rel="noreferrer"
                                     aria-label="Abrir conversa pelo WhatsApp"
                                 >
-                                    <PhoneIcon className="h-5 w-5" aria-hidden="true" />
+                                    <FaWhatsapp className="h-5 w-5" aria-hidden="true" />
                                     WhatsApp {CONTACT.phoneDisplay}
                                 </a>
                             </CardContent>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarIcon } from "@heroicons/react/24/outline";
+import { FiCalendar } from "react-icons/fi";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { HomeHero } from "@/components/content/HomeHero";
@@ -110,7 +110,7 @@ export default async function HomePage() {
                                         description={article.description}
                                     />
                                     <CardContent className="mt-4 flex items-center gap-2 text-sm text-muted">
-                                        <CalendarIcon className="h-4 w-4" aria-hidden="true" />
+                                        <FiCalendar className="h-4 w-4" aria-hidden="true" />
                                         <span>
                                             {format(
                                                 new Date(article.date),

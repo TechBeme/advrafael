@@ -3,12 +3,8 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import {
-    Bars3Icon,
-    ChatBubbleLeftRightIcon,
-    EnvelopeIcon,
-    XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { FiMenu, FiX, FiMail } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { buttonClasses } from "../ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -46,11 +42,7 @@ export function NavBar() {
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-ink shadow-sm transition hover:border-primary/50 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:hidden"
                 onClick={() => setOpen((prev) => !prev)}
             >
-                {open ? (
-                    <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-                ) : (
-                    <Bars3Icon className="h-5 w-5" aria-hidden="true" />
-                )}
+                {open ? <FiX className="h-5 w-5" aria-hidden="true" /> : <FiMenu className="h-5 w-5" aria-hidden="true" />}
             </button>
 
             <div
@@ -83,7 +75,7 @@ export function NavBar() {
                             className={buttonClasses({ variant: "secondary", size: "sm" })}
                             onClick={() => setOpen(false)}
                         >
-                            <EnvelopeIcon className="h-4 w-4" aria-hidden="true" />
+                            <FiMail className="h-4 w-4" aria-hidden="true" />
                             Agendar contato
                         </Link>
                         <a
@@ -94,7 +86,7 @@ export function NavBar() {
                             aria-label="Abrir conversa no WhatsApp"
                             onClick={() => setOpen(false)}
                         >
-                            <ChatBubbleLeftRightIcon className="h-4 w-4" aria-hidden="true" />
+                            <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
                             WhatsApp
                         </a>
                     </div>

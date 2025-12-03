@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { FiMail, FiMapPin } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { Container } from "../ui/Section";
 import { buttonClasses } from "../ui/Button";
 
@@ -58,7 +59,7 @@ export default function Footer() {
                     </h4>
                     <div className="space-y-2 text-sm text-ink">
                         <div className="inline-flex items-center gap-3 rounded-lg border border-border bg-white px-3 py-2 shadow-sm">
-                            <MapPinIcon className="h-5 w-5 text-primary" aria-hidden="true" />
+                            <FiMapPin className="h-5 w-5 text-primary" aria-hidden="true" />
                             <div>
                                 <p className="font-semibold text-ink">Belo Horizonte / MG</p>
                                 <p className="text-muted">Atendimento sob agendamento</p>
@@ -69,7 +70,7 @@ export default function Footer() {
                                 className={buttonClasses({ variant: "secondary", size: "sm" })}
                                 href={`mailto:${CONTACT.email}`}
                             >
-                                <EnvelopeIcon className="h-4 w-4" aria-hidden="true" />
+                                <FiMail className="h-4 w-4" aria-hidden="true" />
                                 {CONTACT.email}
                             </a>
                             <a
@@ -79,7 +80,7 @@ export default function Footer() {
                                 rel="noreferrer"
                                 aria-label="Abrir conversa pelo WhatsApp"
                             >
-                                <PhoneIcon className="h-4 w-4" aria-hidden="true" />
+                                <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
                                 WhatsApp {CONTACT.phoneDisplay}
                             </a>
                         </div>

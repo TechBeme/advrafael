@@ -2,12 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-    ArrowRightIcon,
-    CheckCircleIcon,
-    PhoneIcon,
-    ShieldCheckIcon,
-} from "@heroicons/react/24/outline";
+import { FiArrowRight, FiCheckCircle, FiPhone, FiShield } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { motion } from "motion/react";
 import { Section, Container } from "../ui/Section";
 import { Badge } from "../ui/Badge";
@@ -50,7 +46,7 @@ export function HomeHero({ whatsappLink }: HomeHeroProps) {
                             href="/contato"
                             className={buttonClasses({ variant: "primary", size: "lg" })}
                         >
-                            <ArrowRightIcon className="h-5 w-5" aria-hidden="true" />
+                            <FiArrowRight className="h-5 w-5" aria-hidden="true" />
                             Falar agora
                         </Link>
                         <a
@@ -60,8 +56,8 @@ export function HomeHero({ whatsappLink }: HomeHeroProps) {
                             rel="noreferrer"
                             aria-label="Abrir conversa no WhatsApp"
                         >
-                            <PhoneIcon className="h-5 w-5" aria-hidden="true" />
-                            WhatsApp
+                            <FaWhatsapp className="h-5 w-5" aria-hidden="true" />
+                            WhatsApp direto
                         </a>
                     </FadeIn>
                     <StaggerFadeIn className="grid gap-3 md:grid-cols-2">
@@ -70,7 +66,7 @@ export function HomeHero({ whatsappLink }: HomeHeroProps) {
                                 key={item}
                                 className="flex items-start gap-3 rounded-xl border border-border bg-white/90 px-4 py-3 shadow-card backdrop-blur"
                             >
-                                <CheckCircleIcon className="mt-0.5 h-5 w-5 text-primary" aria-hidden="true" />
+                                <FiCheckCircle className="mt-0.5 h-5 w-5 text-primary" aria-hidden="true" />
                                 <p className="text-sm text-ink">{item}</p>
                             </div>
                         ))}
@@ -78,12 +74,12 @@ export function HomeHero({ whatsappLink }: HomeHeroProps) {
                     <FadeIn delay={0.2}>
                         <div className="flex flex-wrap gap-3 text-sm text-muted">
                             <div className="inline-flex items-center gap-2 rounded-full bg-highlight px-3 py-2">
-                                <ShieldCheckIcon className="h-4 w-4 text-primary" aria-hidden="true" />
+                                <FiShield className="h-4 w-4 text-primary" aria-hidden="true" />
                                 Atendimento sob agendamento, foco em previsibilidade
                             </div>
                             <div className="inline-flex items-center gap-2 rounded-full bg-highlight px-3 py-2">
-                                <PhoneIcon className="h-4 w-4 text-primary" aria-hidden="true" />
-                                Resposta inicial em horário comercial
+                                <FiPhone className="h-4 w-4 text-primary" aria-hidden="true" />
+                                Resposta em horário comercial
                             </div>
                         </div>
                     </FadeIn>

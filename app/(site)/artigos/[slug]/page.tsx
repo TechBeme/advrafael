@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CalendarIcon, ClockIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { FiCalendar, FiClock, FiHome } from "react-icons/fi";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Prose } from "@/components/content/Prose";
@@ -65,7 +65,7 @@ export default async function ArticlePage({
                                 href="/"
                                 className="inline-flex items-center gap-1 rounded-full px-2 py-1 transition hover:text-primary"
                             >
-                                <HomeIcon className="h-4 w-4" aria-hidden="true" />
+                                <FiHome className="h-4 w-4" aria-hidden="true" />
                                 Início
                             </Link>
                             <span aria-hidden="true">/</span>
@@ -86,14 +86,14 @@ export default async function ArticlePage({
                             <p className="text-base text-muted">{meta.description}</p>
                             <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
                                 <span className="inline-flex items-center gap-1">
-                                    <CalendarIcon className="h-4 w-4" aria-hidden="true" />
+                                    <FiCalendar className="h-4 w-4" aria-hidden="true" />
                                     {format(new Date(meta.date), "dd 'de' MMMM 'de' yyyy", {
                                         locale: ptBR,
                                     })}
                                 </span>
                                 {meta.readingTime ? (
                                     <span className="inline-flex items-center gap-1">
-                                        <ClockIcon className="h-4 w-4" aria-hidden="true" />
+                                        <FiClock className="h-4 w-4" aria-hidden="true" />
                                         {meta.readingTime}
                                     </span>
                                 ) : null}
