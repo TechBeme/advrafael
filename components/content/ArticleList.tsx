@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Card, CardContent, CardHeader } from "../ui/Card";
 import { Badge } from "../ui/Badge";
+import { StaggerFadeIn } from "../ui/Animate";
 import type { ArticleMeta } from "@/lib/types";
 
 type ArticleListProps = {
@@ -12,7 +13,7 @@ type ArticleListProps = {
 
 export function ArticleList({ articles }: ArticleListProps) {
     return (
-        <div className="grid gap-4 md:grid-cols-2">
+        <StaggerFadeIn className="grid gap-4 md:grid-cols-2">
             {articles.map((article) => (
                 <Card key={article.slug}>
                     <CardHeader
@@ -42,6 +43,6 @@ export function ArticleList({ articles }: ArticleListProps) {
                     </CardContent>
                 </Card>
             ))}
-        </div>
+        </StaggerFadeIn>
     );
 }

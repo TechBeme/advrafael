@@ -7,6 +7,7 @@ import { Prose } from "@/components/content/Prose";
 import { Container, Section } from "@/components/ui/Section";
 import { Badge } from "@/components/ui/Badge";
 import { buttonClasses } from "@/components/ui/Button";
+import { FadeIn } from "@/components/ui/Animate";
 import { getArticleBySlug, getArticlesIndex } from "@/lib/content";
 import { siteConfig } from "@/lib/seo";
 
@@ -58,28 +59,30 @@ export default async function ArticlePage({
 
         return (
             <>
-                <Section className="pb-6 pt-8">
+                <Section className="pb-6 pt-10">
                     <Container className="space-y-4">
-                        <nav className="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
-                            <Link
-                                href="/"
-                                className="inline-flex items-center gap-1 rounded-full px-2 py-1 transition hover:text-primary"
-                            >
-                                <FiHome className="h-4 w-4" aria-hidden="true" />
-                                Início
-                            </Link>
-                            <span aria-hidden="true">/</span>
-                            <Link
-                                href="/artigos"
-                                className="rounded-full px-2 py-1 transition hover:text-primary"
-                            >
-                                Artigos
-                            </Link>
-                            <span aria-hidden="true">/</span>
-                            <span className="rounded-full px-2 py-1 text-ink">{meta.title}</span>
-                        </nav>
+                        <FadeIn>
+                            <nav className="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
+                                <Link
+                                    href="/"
+                                    className="inline-flex items-center gap-1 rounded-full px-2 py-1 transition hover:text-primary"
+                                >
+                                    <FiHome className="h-4 w-4" aria-hidden="true" />
+                                    Início
+                                </Link>
+                                <span aria-hidden="true">/</span>
+                                <Link
+                                    href="/artigos"
+                                    className="rounded-full px-2 py-1 transition hover:text-primary"
+                                >
+                                    Artigos
+                                </Link>
+                                <span aria-hidden="true">/</span>
+                                <span className="rounded-full px-2 py-1 text-ink">{meta.title}</span>
+                            </nav>
+                        </FadeIn>
 
-                        <div className="space-y-3">
+                        <FadeIn delay={0.05} className="space-y-3 rounded-xl bg-white/90 p-6 shadow-soft">
                             <h1 className="text-3xl font-semibold leading-tight text-ink md:text-4xl">
                                 {meta.title}
                             </h1>
@@ -106,16 +109,17 @@ export default async function ArticlePage({
                                       ))
                                     : null}
                             </div>
-                        </div>
-
+                        </FadeIn>
                     </Container>
                 </Section>
 
                 <Section className="pt-0">
                     <Container className="space-y-8">
-                        <Prose>{content}</Prose>
+                        <FadeIn delay={0.08}>
+                            <Prose>{content}</Prose>
+                        </FadeIn>
 
-                        <div className="flex flex-wrap gap-3">
+                        <FadeIn delay={0.12} className="flex flex-wrap gap-3">
                             <Link
                                 href="/contato"
                                 className={buttonClasses({ variant: "primary", size: "md" })}
@@ -128,7 +132,7 @@ export default async function ArticlePage({
                             >
                                 Voltar para artigos
                             </Link>
-                        </div>
+                        </FadeIn>
                     </Container>
                 </Section>
             </>

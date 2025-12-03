@@ -1,6 +1,7 @@
 import { Container, Section } from "@/components/ui/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ArticleList } from "@/components/content/ArticleList";
+import { FadeIn } from "@/components/ui/Animate";
 import { getArticlesIndex } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
@@ -21,8 +22,10 @@ export default async function ArtigosPage() {
                 description="Textos em linguagem acessível sobre temas de Direito Cível e do Consumidor."
             />
             <Section>
-                <Container className="space-y-4">
-                    <ArticleList articles={articles} />
+                <Container className="space-y-6">
+                    <FadeIn>
+                        <ArticleList articles={articles} />
+                    </FadeIn>
                 </Container>
             </Section>
         </>
