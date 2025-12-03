@@ -5,7 +5,7 @@ import { Container } from "../ui/Section";
 import { buttonClasses } from "../ui/Button";
 
 const NAV_ITEMS = [
-    { href: "/#sobre", label: "Sobre" },
+    { href: "/sobre", label: "Sobre" },
     { href: "/#areas", label: "Áreas de atuação" },
     { href: "/artigos", label: "Artigos" },
     { href: "/#faq", label: "FAQ" },
