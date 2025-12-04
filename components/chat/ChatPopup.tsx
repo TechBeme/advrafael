@@ -8,7 +8,7 @@ import { FiMessageCircle, FiX, FiSend, FiUser, FiMic, FiSquare } from 'react-ico
 import { cn } from '@/lib/utils';
 
 const INITIAL_MESSAGES = [
-    'Olá! Sou a assistente virtual do Dr. Rafael Vieira. Como posso ajudá-lo?',
+    'Olá! Sou do escritório do Dr. Rafael Vieira. Como posso ajudá-lo?',
 ];
 
 export function ChatPopup() {

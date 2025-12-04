@@ -103,10 +103,10 @@ export default async function ArticlePage({
                                 {meta.featured ? <Badge variant="outline">Em destaque</Badge> : null}
                                 {meta.tags?.length
                                     ? meta.tags.map((tag) => (
-                                          <Badge key={tag} variant="outline">
-                                              {tag}
-                                          </Badge>
-                                      ))
+                                        <Badge key={tag} variant="outline">
+                                            {tag}
+                                        </Badge>
+                                    ))
                                     : null}
                             </div>
                         </FadeIn>

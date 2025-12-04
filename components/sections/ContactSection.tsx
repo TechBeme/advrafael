@@ -211,7 +211,7 @@ export function ContactSection() {
                                     <p className="font-semibold text-stone-900">Atendimento Online</p>
                                 </div>
                                 <p className="mb-6 flex-1 text-stone-600">
-                                    Agende sua consultoria presencial ou por videochamada de forma rápida pelo nosso assistente virtual.
+                                    Agende sua consultoria presencial ou por videochamada de forma rápida pelo chat.
                                 </p>
                                 <Button variant="primary" onClick={openChat} className="w-full">
                                     Agendar pelo Chat

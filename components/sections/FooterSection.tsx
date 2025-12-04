@@ -38,7 +38,7 @@ export function FooterSection() {
                                 <FaWhatsapp className="h-5 w-5" />
                             </a>
                             <a
-                                href="mailto:rafasv@outlook.com.br"
+                                href="mailto:contato@advrafael.com.br"
                                 className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-500 transition-all hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
                                 aria-label="E-mail"
                             >
