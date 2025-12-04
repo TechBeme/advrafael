@@ -57,6 +57,8 @@ const viewCalendarTool = tool({
             .describe("Quantos dias à frente consultar (1-14)"),
     }),
     execute: async (input) => {
+        console.log("[TOOL:ver_agenda] Iniciando consulta", { daysAhead: input.daysAhead });
+        
         const now = new Date();
         const timeMax = new Date(now.getTime() + input.daysAhead * 24 * 60 * 60 * 1000);
 
@@ -67,12 +69,15 @@ const viewCalendarTool = tool({
         });
 
         if (!result.ok) {
+            console.error("[TOOL:ver_agenda] Erro ao buscar eventos", { message: result.message });
             return {
                 success: false,
                 message: result.message,
                 events: [],
             };
         }
+
+        console.log("[TOOL:ver_agenda] Eventos encontrados", { count: result.events.length });
 
         // Formatar eventos de forma legível
         const formattedEvents = result.events.map((event) => {
@@ -102,6 +107,11 @@ const viewCalendarTool = tool({
             };
         });
 
+        console.log("[TOOL:ver_agenda] Sucesso", { 
+            eventCount: formattedEvents.length,
+            events: formattedEvents.slice(0, 5) // Log apenas os 5 primeiros
+        });
+
         return {
             success: true,
             message: `Encontrados ${formattedEvents.length} compromissos nos próximos ${input.daysAhead} dias.`,
@@ -129,20 +139,38 @@ const scheduleTool = tool({
         notes: z.string().optional().describe("Observações adicionais"),
     }),
     execute: async (input) => {
+        console.log("[TOOL:agendar] Iniciando agendamento", {
+            cliente: input.clientName,
+            telefone: input.clientPhone,
+            horario: input.startDateTime,
+            tipo: input.meetingType,
+        });
+
         try {
             // Calcular horário de término (30 minutos depois)
             const startDate = new Date(input.startDateTime);
             const endDate = new Date(startDate.getTime() + SLOT_DURATION_MINUTES * 60 * 1000);
             const endDateTime = endDate.toISOString();
 
+            console.log("[TOOL:agendar] Verificando disponibilidade", {
+                start: input.startDateTime,
+                end: endDateTime,
+            });
+
             // Verificar se o horário está livre
             const availability = await isSlotAvailable(input.startDateTime, endDateTime);
+            
             if (!availability.available) {
+                console.warn("[TOOL:agendar] Horário ocupado", { 
+                    conflito: availability.conflictWith 
+                });
                 return {
                     success: false,
                     message: `Este horário já está ocupado${availability.conflictWith ? ` (${availability.conflictWith})` : ""}. Por favor, escolha outro horário.`,
                 };
             }
+
+            console.log("[TOOL:agendar] Horário disponível, criando evento...");
 
             // Formatar título e descrição
             const tipoLabel = input.meetingType === "online" ? "🖥️ Online" : "📍 Presencial";
@@ -175,6 +203,7 @@ const scheduleTool = tool({
             });
 
             if (!result.ok) {
+                console.error("[TOOL:agendar] Erro ao criar evento", { message: result.message });
                 return {
                     success: false,
                     message: result.message,
@@ -194,6 +223,13 @@ const scheduleTool = tool({
                 timeZone: "America/Sao_Paulo",
             });
 
+            console.log("[TOOL:agendar] ✅ Agendamento criado com sucesso!", {
+                eventId: result.eventId,
+                cliente: input.clientName,
+                data: dateFormatted,
+                horario: timeFormatted,
+            });
+
             return {
                 success: true,
                 message: "Agendamento criado com sucesso!",
@@ -206,7 +242,7 @@ const scheduleTool = tool({
                 },
             };
         } catch (error) {
-            console.error("[assistente] erro ao agendar", error);
+            console.error("[TOOL:agendar] ❌ Erro inesperado", error);
             return {
                 success: false,
                 message:
@@ -217,9 +253,22 @@ const scheduleTool = tool({
 });
 
 export async function POST(request: Request) {
+    console.log("[API:assistente] ========== Nova requisição ==========");
+    
     try {
         const { messages }: { messages: UIMessage[] } = await request.json();
+        
+        const lastMessage = messages[messages.length - 1];
+        console.log("[API:assistente] Mensagens recebidas:", {
+            total: messages.length,
+            ultimaMensagem: {
+                role: lastMessage?.role,
+                id: lastMessage?.id,
+            },
+        });
 
+        console.log("[API:assistente] Iniciando stream com Gemini 2.5 Flash...");
+        
         const result = streamText({
             model: google("gemini-2.5-flash"),
             system: systemPrompt,
@@ -228,11 +277,21 @@ export async function POST(request: Request) {
                 ver_agenda: viewCalendarTool,
                 agendar: scheduleTool,
             },
+            onFinish: ({ text, toolCalls, finishReason, usage }) => {
+                console.log("[API:assistente] Stream finalizado", {
+                    finishReason,
+                    textLength: text?.length ?? 0,
+                    toolCallsCount: toolCalls?.length ?? 0,
+                    toolCalls: toolCalls?.map(tc => tc.toolName),
+                    usage,
+                });
+            },
         });
 
+        console.log("[API:assistente] Retornando stream response...");
         return result.toUIMessageStreamResponse();
     } catch (error) {
-        console.error("[assistente] erro na rota", error);
+        console.error("[API:assistente] ❌ Erro na rota:", error);
         return NextResponse.json(
             { message: "Não foi possível iniciar a conversa agora." },
             { status: 500 },

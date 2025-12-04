@@ -26,15 +26,26 @@ function getCalendarConfig() {
     const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.replace(/\\n/g, "\n");
 
+    const isReady = Boolean(clientEmail && privateKey);
+    
+    console.log("[Calendar:config]", {
+        calendarId: calendarId ? `${calendarId.slice(0, 20)}...` : "NÃO DEFINIDO",
+        clientEmail: clientEmail ? `${clientEmail.slice(0, 30)}...` : "NÃO DEFINIDO",
+        privateKeyLength: privateKey?.length ?? 0,
+        isReady,
+    });
+
     return {
         calendarId,
         clientEmail,
         privateKey,
-        isReady: Boolean(clientEmail && privateKey),
+        isReady,
     };
 }
 
 async function getAccessToken(email: string, key: string) {
+    console.log("[Calendar:auth] Obtendo access token...");
+    
     const now = Math.floor(Date.now() / 1000);
     const payload = {
         iss: email,
@@ -67,14 +78,20 @@ async function getAccessToken(email: string, key: string) {
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error("[Calendar:auth] ❌ Erro ao obter token", { 
+            status: response.status, 
+            error: errorText 
+        });
         throw new Error(`Token request failed: ${response.status} - ${errorText}`);
     }
 
     const json = (await response.json()) as { access_token?: string };
     if (!json.access_token) {
+        console.error("[Calendar:auth] ❌ Token vazio na resposta");
         throw new Error("Token response missing access_token");
     }
 
+    console.log("[Calendar:auth] ✅ Token obtido com sucesso");
     return json.access_token;
 }
 
@@ -86,8 +103,11 @@ export async function getCalendarEvents(options?: {
     timeMax?: Date;
     maxResults?: number;
 }): Promise<{ ok: true; events: CalendarEvent[] } | { ok: false; message: string }> {
+    console.log("[Calendar:getEvents] Iniciando busca de eventos...");
+    
     const config = getCalendarConfig();
     if (!config.isReady) {
+        console.error("[Calendar:getEvents] ❌ Configuração incompleta");
         return {
             ok: false,
             message: "Google Calendar não configurado",
@@ -100,6 +120,11 @@ export async function getCalendarEvents(options?: {
         const now = new Date();
         const timeMin = options?.timeMin ?? now;
         const timeMax = options?.timeMax ?? new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 dias
+
+        console.log("[Calendar:getEvents] Período de busca", {
+            timeMin: timeMin.toISOString(),
+            timeMax: timeMax.toISOString(),
+        });
 
         const params = new URLSearchParams({
             timeMin: timeMin.toISOString(),
@@ -119,6 +144,10 @@ export async function getCalendarEvents(options?: {
 
         if (!response.ok) {
             const errorText = await response.text();
+            console.error("[Calendar:getEvents] ❌ Erro da API", { 
+                status: response.status, 
+                error: errorText 
+            });
             throw new Error(`Calendar API error: ${response.status} - ${errorText}`);
         }
 
@@ -141,10 +170,12 @@ export async function getCalendarEvents(options?: {
                 end: item.end?.dateTime ?? item.end?.date ?? "",
                 status: item.status ?? "confirmed",
             }));
+        
+        console.log("[Calendar:getEvents] ✅ Eventos encontrados:", events.length);
 
         return { ok: true, events };
     } catch (error) {
-        console.error("[google-calendar] erro ao buscar eventos", error);
+        console.error("[Calendar:getEvents] ❌ Erro ao buscar eventos", error);
         return {
             ok: false,
             message: error instanceof Error ? error.message : "Erro ao buscar agenda",
@@ -158,8 +189,15 @@ export async function getCalendarEvents(options?: {
 export async function createCalendarEvent(
     input: CreateEventInput,
 ): Promise<{ ok: true; eventId: string; htmlLink: string } | { ok: false; message: string }> {
+    console.log("[Calendar:createEvent] Iniciando criação de evento", {
+        summary: input.summary,
+        start: input.startDateTime,
+        end: input.endDateTime,
+    });
+    
     const config = getCalendarConfig();
     if (!config.isReady) {
+        console.error("[Calendar:createEvent] ❌ Configuração incompleta");
         return {
             ok: false,
             message: "Google Calendar não configurado",
@@ -202,6 +240,8 @@ export async function createCalendarEvent(
 
         const url = `${CALENDAR_API_BASE}/calendars/${encodeURIComponent(config.calendarId)}/events`;
 
+        console.log("[Calendar:createEvent] Enviando requisição para API...");
+        
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -213,10 +253,19 @@ export async function createCalendarEvent(
 
         if (!response.ok) {
             const errorText = await response.text();
+            console.error("[Calendar:createEvent] ❌ Erro da API", { 
+                status: response.status, 
+                error: errorText 
+            });
             throw new Error(`Calendar API error: ${response.status} - ${errorText}`);
         }
 
         const data = (await response.json()) as { id: string; htmlLink: string };
+
+        console.log("[Calendar:createEvent] ✅ Evento criado com sucesso!", {
+            eventId: data.id,
+            link: data.htmlLink,
+        });
 
         return {
             ok: true,
@@ -224,7 +273,7 @@ export async function createCalendarEvent(
             htmlLink: data.htmlLink,
         };
     } catch (error) {
-        console.error("[google-calendar] erro ao criar evento", error);
+        console.error("[Calendar:createEvent] ❌ Erro ao criar evento", error);
         return {
             ok: false,
             message: error instanceof Error ? error.message : "Erro ao criar evento",
