@@ -1,4 +1,3 @@
-import { getArticlesIndex } from "@/lib/content";
 import { siteConfig } from "@/lib/seo";
 
 export default async function sitemap() {
@@ -6,17 +5,10 @@ export default async function sitemap() {
 
     const staticRoutes = [
         "",
-        "/sobre",
-        "/artigos",
-        "/contato",
         "/politica-de-privacidade",
     ];
 
-    const articles = await getArticlesIndex();
-
-    const articleRoutes = articles.map((article) => `/artigos/${article.slug}`);
-
-    return [...staticRoutes, ...articleRoutes].map((route) => ({
+    return staticRoutes.map((route) => ({
         url: `${baseUrl}${route || "/"}`,
         lastModified: new Date(),
         changefreq: "monthly",
