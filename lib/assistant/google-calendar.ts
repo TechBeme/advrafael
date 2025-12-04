@@ -27,7 +27,7 @@ function getCalendarConfig() {
     const privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY?.replace(/\\n/g, "\n");
 
     const isReady = Boolean(clientEmail && privateKey);
-    
+
     console.log("[Calendar:config]", {
         calendarId: calendarId ? `${calendarId.slice(0, 20)}...` : "NÃO DEFINIDO",
         clientEmail: clientEmail ? `${clientEmail.slice(0, 30)}...` : "NÃO DEFINIDO",
@@ -45,7 +45,7 @@ function getCalendarConfig() {
 
 async function getAccessToken(email: string, key: string) {
     console.log("[Calendar:auth] Obtendo access token...");
-    
+
     const now = Math.floor(Date.now() / 1000);
     const payload = {
         iss: email,
@@ -78,9 +78,9 @@ async function getAccessToken(email: string, key: string) {
 
     if (!response.ok) {
         const errorText = await response.text();
-        console.error("[Calendar:auth] ❌ Erro ao obter token", { 
-            status: response.status, 
-            error: errorText 
+        console.error("[Calendar:auth] ❌ Erro ao obter token", {
+            status: response.status,
+            error: errorText
         });
         throw new Error(`Token request failed: ${response.status} - ${errorText}`);
     }
@@ -104,7 +104,7 @@ export async function getCalendarEvents(options?: {
     maxResults?: number;
 }): Promise<{ ok: true; events: CalendarEvent[] } | { ok: false; message: string }> {
     console.log("[Calendar:getEvents] Iniciando busca de eventos...");
-    
+
     const config = getCalendarConfig();
     if (!config.isReady) {
         console.error("[Calendar:getEvents] ❌ Configuração incompleta");
@@ -144,9 +144,9 @@ export async function getCalendarEvents(options?: {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error("[Calendar:getEvents] ❌ Erro da API", { 
-                status: response.status, 
-                error: errorText 
+            console.error("[Calendar:getEvents] ❌ Erro da API", {
+                status: response.status,
+                error: errorText
             });
             throw new Error(`Calendar API error: ${response.status} - ${errorText}`);
         }
@@ -170,7 +170,7 @@ export async function getCalendarEvents(options?: {
                 end: item.end?.dateTime ?? item.end?.date ?? "",
                 status: item.status ?? "confirmed",
             }));
-        
+
         console.log("[Calendar:getEvents] ✅ Eventos encontrados:", events.length);
 
         return { ok: true, events };
@@ -194,7 +194,7 @@ export async function createCalendarEvent(
         start: input.startDateTime,
         end: input.endDateTime,
     });
-    
+
     const config = getCalendarConfig();
     if (!config.isReady) {
         console.error("[Calendar:createEvent] ❌ Configuração incompleta");
@@ -241,7 +241,7 @@ export async function createCalendarEvent(
         const url = `${CALENDAR_API_BASE}/calendars/${encodeURIComponent(config.calendarId)}/events`;
 
         console.log("[Calendar:createEvent] Enviando requisição para API...");
-        
+
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -253,9 +253,9 @@ export async function createCalendarEvent(
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error("[Calendar:createEvent] ❌ Erro da API", { 
-                status: response.status, 
-                error: errorText 
+            console.error("[Calendar:createEvent] ❌ Erro da API", {
+                status: response.status,
+                error: errorText
             });
             throw new Error(`Calendar API error: ${response.status} - ${errorText}`);
         }

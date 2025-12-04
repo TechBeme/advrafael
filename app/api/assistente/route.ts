@@ -11,9 +11,26 @@ import {
 export const maxDuration = 30;
 
 const SLOT_DURATION_MINUTES = 30;
+const TIMEZONE = "America/Sao_Paulo";
 
-const systemPrompt = `
+function buildSystemPrompt() {
+    // Data atual no fuso horário de Brasília
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat("pt-BR", {
+        timeZone: TIMEZONE,
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+    const dataAtual = formatter.format(now);
+
+    return `
 Você é Clara, assistente do Dr. Rafael Vieira, advogado especializado em Direito Civil e Empresarial em Belo Horizonte.
+
+DATA E HORA ATUAL: ${dataAtual} (Horário de Brasília, GMT-3)
 
 Seu objetivo: acolher o cliente, entender brevemente a situação e agendar uma consultoria (presencial em BH ou online).
 
@@ -32,17 +49,20 @@ O que coletar naturalmente na conversa:
 
 Agendamento:
 - IMPORTANTE: Use a ferramenta "ver_agenda" para consultar os horários já ocupados do Dr. Rafael.
-- O escritório funciona de segunda a sexta, das 09:30 às 12:00 e das 14:00 às 18:30 (horário de Brasília).
+- O escritório funciona de segunda a sexta, das 09:30 às 12:00 e das 14:00 às 18:30 (horário de Brasília, GMT-3).
 - Consultas têm duração de 30 minutos.
-- Proponha horários LIVRES dentro desses períodos.
+- Proponha horários LIVRES dentro desses períodos, SEMPRE a partir da data atual.
+- NUNCA agende no passado. Só proponha datas futuras.
+- Ao usar a ferramenta "agendar", use o formato ISO com timezone -03:00, ex: 2025-12-05T10:00:00-03:00
 - Quando o cliente confirmar um horário, use a ferramenta "agendar" para criar o evento no calendário.
 - Informe que o Dr. Rafael ou a equipe confirmará por WhatsApp.
 
 Fluxo ideal:
 1. Entenda o caso do cliente
 2. Use "ver_agenda" para ver os compromissos existentes
-3. Proponha 2-3 horários livres
+3. Proponha 2-3 horários livres (sempre datas futuras!)
 4. Quando confirmado, use "agendar" para registrar no calendário`;
+}
 
 // Tool para consultar agenda
 const viewCalendarTool = tool({
@@ -58,7 +78,7 @@ const viewCalendarTool = tool({
     }),
     execute: async (input) => {
         console.log("[TOOL:ver_agenda] Iniciando consulta", { daysAhead: input.daysAhead });
-        
+
         const now = new Date();
         const timeMax = new Date(now.getTime() + input.daysAhead * 24 * 60 * 60 * 1000);
 
@@ -107,7 +127,7 @@ const viewCalendarTool = tool({
             };
         });
 
-        console.log("[TOOL:ver_agenda] Sucesso", { 
+        console.log("[TOOL:ver_agenda] Sucesso", {
             eventCount: formattedEvents.length,
             events: formattedEvents.slice(0, 5) // Log apenas os 5 primeiros
         });
@@ -159,10 +179,10 @@ const scheduleTool = tool({
 
             // Verificar se o horário está livre
             const availability = await isSlotAvailable(input.startDateTime, endDateTime);
-            
+
             if (!availability.available) {
-                console.warn("[TOOL:agendar] Horário ocupado", { 
-                    conflito: availability.conflictWith 
+                console.warn("[TOOL:agendar] Horário ocupado", {
+                    conflito: availability.conflictWith
                 });
                 return {
                     success: false,
@@ -254,10 +274,10 @@ const scheduleTool = tool({
 
 export async function POST(request: Request) {
     console.log("[API:assistente] ========== Nova requisição ==========");
-    
+
     try {
         const { messages }: { messages: UIMessage[] } = await request.json();
-        
+
         const lastMessage = messages[messages.length - 1];
         console.log("[API:assistente] Mensagens recebidas:", {
             total: messages.length,
@@ -269,6 +289,9 @@ export async function POST(request: Request) {
 
         console.log("[API:assistente] Iniciando stream com Gemini 2.5 Flash...");
         
+        const systemPrompt = buildSystemPrompt();
+        console.log("[API:assistente] Data atual no prompt:", systemPrompt.match(/DATA E HORA ATUAL: (.+)/)?.[1]);
+
         const result = streamText({
             model: google("gemini-2.5-flash"),
             system: systemPrompt,
