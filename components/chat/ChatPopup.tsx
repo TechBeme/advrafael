@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, FormEvent } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { FiMessageCircle, FiX, FiSend, FiUser, FiMic, FiSquare } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
@@ -177,13 +178,18 @@ export function ChatPopup() {
                         >
                             <div className="flex items-start gap-3">
                                 <div className="relative">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-                                        <FiUser className="h-5 w-5 text-accent" />
+                                    <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                                        <Image
+                                            src="/images/clara.jpeg"
+                                            alt="Clara"
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
                                     <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="mb-1 text-xs text-stone-500">Escritório Dr. Rafael Vieira</p>
+                                    <p className="mb-1 text-xs text-stone-500">Clara · Assistente</p>
                                     <p className="text-sm font-medium text-stone-900">{INITIAL_MESSAGES[0]}</p>
                                 </div>
                             </div>
@@ -237,13 +243,18 @@ export function ChatPopup() {
                         <div className="border-b border-stone-100 bg-stone-50 px-4 py-3">
                             <div className="flex items-center gap-3">
                                 <div className="relative">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-                                        <FiUser className="h-5 w-5 text-accent" />
+                                    <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                                        <Image
+                                            src="/images/clara.jpeg"
+                                            alt="Clara"
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
                                     <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-sm font-semibold text-stone-900">Dr. Rafael Vieira</p>
+                                    <p className="text-sm font-semibold text-stone-900">Clara</p>
                                     <p className="flex items-center gap-1 text-xs text-green-600">
                                         <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                         Online
@@ -265,8 +276,13 @@ export function ChatPopup() {
                                             transition={{ delay: i * 0.3 }}
                                             className="flex gap-2"
                                         >
-                                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10">
-                                                <FiUser className="h-4 w-4 text-accent" />
+                                            <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                                                <Image
+                                                    src="/images/clara.jpeg"
+                                                    alt="Clara"
+                                                    fill
+                                                    className="object-cover"
+                                                />
                                             </div>
                                             <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white px-4 py-2 shadow-sm">
                                                 <p className="text-sm text-stone-700">{msg}</p>
@@ -285,8 +301,13 @@ export function ChatPopup() {
                                     className={cn('flex gap-2', message.role === 'user' && 'flex-row-reverse')}
                                 >
                                     {message.role === 'assistant' && (
-                                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10">
-                                            <FiUser className="h-4 w-4 text-accent" />
+                                        <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                                            <Image
+                                                src="/images/clara.jpeg"
+                                                alt="Clara"
+                                                fill
+                                                className="object-cover"
+                                            />
                                         </div>
                                     )}
                                     <div
@@ -305,8 +326,13 @@ export function ChatPopup() {
                             {/* Typing indicator */}
                             {isLoading && (
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-2">
-                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10">
-                                        <FiUser className="h-4 w-4 text-accent" />
+                                    <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                                        <Image
+                                            src="/images/clara.jpeg"
+                                            alt="Clara"
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
                                     <div className="rounded-2xl rounded-tl-sm bg-white px-4 py-3 shadow-sm">
                                         <div className="flex gap-1">
