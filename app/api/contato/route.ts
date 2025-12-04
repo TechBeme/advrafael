@@ -19,9 +19,7 @@ export async function POST(request: Request) {
 
         const sanitized = {
             name: sanitizeText(parsed.data.name),
-            email: parsed.data.email?.trim() || '',
             phone: normalizePhone(parsed.data.phone),
-            reason: sanitizeText(parsed.data.reason),
             message: sanitizeText(parsed.data.message),
         };
 

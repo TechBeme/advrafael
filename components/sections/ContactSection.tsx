@@ -45,12 +45,9 @@ export function ContactSection() {
         setSubmitStatus('idle');
 
         try {
-            // Mapear campos do formulário para o formato da API
             const payload = {
                 name: data.nome,
-                email: '', // E-mail não é coletado no formulário
                 phone: data.whatsapp,
-                reason: 'Contato via site',
                 message: data.mensagem,
             };
 

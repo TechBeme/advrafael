@@ -39,28 +39,16 @@ export async function sendContactMessage(payload: ContactPayload) {
     await transporter.sendMail({
         from: mailConfig.from,
         to: mailConfig.to,
-        replyTo: payload.email || undefined,
-        subject: `Site - contato: ${payload.reason}`,
+        subject: `Site - Contato de ${payload.name}`,
         text: formatPlainText(payload),
     });
 }
 
 function formatPlainText(payload: ContactPayload) {
-    const lines = [
+    return [
         `Nome: ${payload.name}`,
-    ];
-    
-    // Só mostra e-mail se existir e não for fake
-    if (payload.email && !payload.email.includes('@whatsapp.temp')) {
-        lines.push(`E-mail: ${payload.email}`);
-    }
-    
-    lines.push(
-        `Telefone/WhatsApp: ${payload.phone}`,
-        `Motivo: ${payload.reason}`,
+        `WhatsApp: ${payload.phone}`,
         "",
         payload.message,
-    );
-    
-    return lines.join("\n");
+    ].join("\n");
 }
