@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, FormEvent } from 'react';
+import { useState, useRef, useEffect, FormEvent, useCallback } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import Image from 'next/image';
@@ -9,8 +9,32 @@ import { FiMessageCircle, FiX, FiSend, FiMic, FiSquare } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
 
 const INITIAL_MESSAGES = [
-    'Olá! Sou a Clara, assistente do Dr. Rafael Vieira. Posso ajudar você a agendar uma consultoria ou tirar dúvidas iniciais sobre nosso atendimento. Como posso ajudar?',
+    'Oi, tudo bem? Aqui é a Clara, do escritório do Dr. Rafael. Em que posso te ajudar?',
 ];
+
+// Configurações de delay para parecer humano
+const READING_SPEED_MS_PER_CHAR = 35; // ~170 palavras/min (leitura normal)
+const TYPING_INDICATOR_MIN_MS = 800; // Mínimo de tempo mostrando "digitando"
+const TYPING_INDICATOR_MAX_MS = 3500; // Máximo de tempo mostrando "digitando"
+const BASE_THINKING_DELAY_MS = 400; // Delay base antes de começar a "digitar"
+
+// Calcula delay de leitura baseado no tamanho da mensagem do usuário
+function calculateReadingDelay(userMessage: string): number {
+    const charCount = userMessage.length;
+    // Tempo base + tempo proporcional ao tamanho
+    const readingTime = BASE_THINKING_DELAY_MS + charCount * READING_SPEED_MS_PER_CHAR;
+    // Limita entre 500ms e 4000ms
+    return Math.min(Math.max(readingTime, 500), 4000);
+}
+
+// Calcula delay de "digitação" baseado no tamanho da resposta
+function calculateTypingDelay(responseLength: number): number {
+    // Simula digitação: ~200ms por caractere, com variação
+    const baseTyping = responseLength * 15;
+    // Adiciona variação aleatória de ±20%
+    const variation = baseTyping * (0.8 + Math.random() * 0.4);
+    return Math.min(Math.max(variation, TYPING_INDICATOR_MIN_MS), TYPING_INDICATOR_MAX_MS);
+}
 
 export function ChatPopup() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +43,14 @@ export function ChatPopup() {
     const [inputValue, setInputValue] = useState('');
     const [isRecording, setIsRecording] = useState(false);
     const [isTranscribing, setIsTranscribing] = useState(false);
+    const [isThinking, setIsThinking] = useState(false); // Clara está "lendo" a mensagem
+    const [isTypingDelayed, setIsTypingDelayed] = useState(false); // Clara está "digitando"
+    const [pendingMessage, setPendingMessage] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
+    const lastUserMessageRef = useRef<string>('');
 
     const { messages, sendMessage, status } = useChat({
         transport: new DefaultChatTransport({
@@ -30,7 +58,10 @@ export function ChatPopup() {
         }),
     });
 
-    const isLoading = status === 'streaming' || status === 'submitted';
+    const actualIsLoading = status === 'streaming' || status === 'submitted';
+    
+    // Combina loading real com delays artificiais
+    const isLoading = actualIsLoading || isThinking || isTypingDelayed;
 
     // Show notification after 3 seconds
     useEffect(() => {
@@ -75,24 +106,62 @@ export function ChatPopup() {
         setIsOpen(false);
     };
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        if (!inputValue.trim() || isLoading) return;
-
-        sendMessage({
-            role: 'user',
-            parts: [{ type: 'text', text: inputValue }],
-        });
-        setInputValue('');
-    };
+    // Função para enviar mensagem com delays humanizados
+    const sendMessageWithDelay = useCallback((text: string) => {
+        const userMessageLength = text.length;
+        lastUserMessageRef.current = text;
+        
+        // Primeiro: mostra que está "lendo" a mensagem
+        setIsThinking(true);
+        
+        const readingDelay = calculateReadingDelay(text);
+        
+        setTimeout(() => {
+            setIsThinking(false);
+            setIsTypingDelayed(true);
+            
+            // Envia a mensagem real para a API
+            sendMessage({
+                role: 'user',
+                parts: [{ type: 'text', text }],
+            });
+        }, readingDelay);
+    }, [sendMessage]);
 
     // Get message content from parts
-    const getMessageContent = (message: (typeof messages)[0]) => {
+    const getMessageContent = useCallback((message: (typeof messages)[0]) => {
         if (!message.parts) return '';
         return message.parts
             .filter((part) => part.type === 'text')
             .map((part) => (part as { type: 'text'; text: string }).text)
             .join('');
+    }, []);
+
+    // Quando a resposta terminar de chegar, adiciona delay de "digitação"
+    useEffect(() => {
+        if (status === 'ready' && isTypingDelayed) {
+            // Resposta chegou, mas ainda estamos no delay de "digitação"
+            const lastMessage = messages[messages.length - 1];
+            if (lastMessage?.role === 'assistant') {
+                const responseText = getMessageContent(lastMessage);
+                const typingDelay = calculateTypingDelay(responseText.length);
+                
+                setTimeout(() => {
+                    setIsTypingDelayed(false);
+                }, typingDelay);
+            } else {
+                setIsTypingDelayed(false);
+            }
+        }
+    }, [status, messages, isTypingDelayed, getMessageContent]);
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (!inputValue.trim() || isLoading) return;
+
+        const text = inputValue.trim();
+        setInputValue('');
+        sendMessageWithDelay(text);
     };
 
     // Audio recording functions
@@ -145,13 +214,9 @@ export function ChatPopup() {
 
             const { text } = await response.json();
             if (text && text.trim()) {
-                setInputValue(text);
-                // Auto-send the transcribed message
-                sendMessage({
-                    role: 'user',
-                    parts: [{ type: 'text', text: text }],
-                });
                 setInputValue('');
+                // Auto-send the transcribed message with delay
+                sendMessageWithDelay(text.trim());
             }
         } catch (error) {
             console.error('Transcription error:', error);
@@ -189,7 +254,7 @@ export function ChatPopup() {
                                     <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="mb-1 text-xs text-stone-500">Clara · Assistente</p>
+                                    <p className="mb-1 text-xs text-stone-500">Clara · Secretária</p>
                                     <p className="text-sm font-medium text-stone-900">{INITIAL_MESSAGES[0]}</p>
                                 </div>
                             </div>
@@ -323,8 +388,8 @@ export function ChatPopup() {
                                 </motion.div>
                             ))}
 
-                            {/* Typing indicator */}
-                            {isLoading && (
+                            {/* Typing indicator - mostra durante leitura e digitação */}
+                            {(isThinking || isTypingDelayed || actualIsLoading) && (
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-2">
                                     <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
                                         <Image
@@ -335,19 +400,21 @@ export function ChatPopup() {
                                         />
                                     </div>
                                     <div className="rounded-2xl rounded-tl-sm bg-white px-4 py-3 shadow-sm">
-                                        <div className="flex gap-1">
-                                            <span
-                                                className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
-                                                style={{ animationDelay: '0ms' }}
-                                            />
-                                            <span
-                                                className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
-                                                style={{ animationDelay: '150ms' }}
-                                            />
-                                            <span
-                                                className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
-                                                style={{ animationDelay: '300ms' }}
-                                            />
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex gap-1">
+                                                <span
+                                                    className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
+                                                    style={{ animationDelay: '0ms' }}
+                                                />
+                                                <span
+                                                    className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
+                                                    style={{ animationDelay: '150ms' }}
+                                                />
+                                                <span
+                                                    className="h-2 w-2 animate-bounce rounded-full bg-stone-400"
+                                                    style={{ animationDelay: '300ms' }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </motion.div>
