@@ -1,21 +1,21 @@
 {
-  "name": "Dr. Rafael Vieira | Advogado em BH",
-  "short_name": "Dr. Rafael Vieira",
-  "description": "Advogado em Belo Horizonte especializado em Direito Civil e Empresarial. Atendimento personalizado e consultoria jurídica estratégica.",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#069494",
-  "icons": [
-    {
-      "src": "/images/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+    "name": "Dr. Rafael Vieira | Advogado em BH",
+    "short_name": "Dr. Rafael Vieira",
+    "description": "Advogado em Belo Horizonte especializado em Direito Civil e Empresarial. Atendimento personalizado e consultoria jurídica estratégica.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#069494",
+    "icons": [
+        {
+            "src": "/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
 }
