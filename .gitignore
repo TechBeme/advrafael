@@ -27,3 +27,9 @@ blob-report
 # AI/sandbox workspace
 .codex
 .specify
+
+# AI specs/prompts (não versionar)
+specs/
+
+# TypeScript cache
+tsconfig.tsbuildinfo

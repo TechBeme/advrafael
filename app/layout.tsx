@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../styles/globals.css";
-import { validateStaticContent } from "@/lib/content-safety";
 import { siteConfig } from "@/lib/seo";
 
 const displayFont = localFont({
@@ -109,8 +108,6 @@ export const metadata: Metadata = {
         // google: "seu-codigo-google-search-console",
     },
 };
-
-validateStaticContent();
 
 export default function RootLayout({
     children,
