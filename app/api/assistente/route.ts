@@ -60,14 +60,14 @@ function isWithinWorkingHours(date: Date): boolean {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const timeInMinutes = hours * 60 + minutes;
-    
+
     // Manhã: 9:00 - 12:00 (540 - 720)
     // Tarde: 13:00 - 18:00 (780 - 1080)
     const morningStart = 9 * 60; // 9:00
     const morningEnd = 12 * 60; // 12:00
     const afternoonStart = 13 * 60; // 13:00
     const afternoonEnd = 18 * 60; // 18:00
-    
+
     return (
         (timeInMinutes >= morningStart && timeInMinutes < morningEnd) ||
         (timeInMinutes >= afternoonStart && timeInMinutes < afternoonEnd)
@@ -77,44 +77,44 @@ function isWithinWorkingHours(date: Date): boolean {
 function validateSchedulingTime(startDateTime: string): { valid: boolean; error?: string } {
     const startDate = new Date(startDateTime);
     const now = new Date();
-    
+
     // Converter para fuso de Brasília para validações
     const startDateBrasilia = new Date(startDate.toLocaleString("en-US", { timeZone: TIMEZONE }));
     const dateStr = startDateTime.split("T")[0];
-    
+
     // Verificar antecedência mínima de 24h
     const hoursUntilAppointment = (startDate.getTime() - now.getTime()) / (1000 * 60 * 60);
     if (hoursUntilAppointment < MIN_HOURS_ADVANCE) {
-        return { 
-            valid: false, 
-            error: `Agendamentos precisam ser feitos com pelo menos ${MIN_HOURS_ADVANCE} horas de antecedência.` 
+        return {
+            valid: false,
+            error: `Agendamentos precisam ser feitos com pelo menos ${MIN_HOURS_ADVANCE} horas de antecedência.`
         };
     }
-    
+
     // Verificar fim de semana
     if (isWeekend(startDateBrasilia)) {
-        return { 
-            valid: false, 
-            error: "Não é possível agendar em fins de semana (sábado e domingo)." 
+        return {
+            valid: false,
+            error: "Não é possível agendar em fins de semana (sábado e domingo)."
         };
     }
-    
+
     // Verificar feriado
     if (isFeriado(dateStr)) {
-        return { 
-            valid: false, 
-            error: "Não é possível agendar em feriados nacionais." 
+        return {
+            valid: false,
+            error: "Não é possível agendar em feriados nacionais."
         };
     }
-    
+
     // Verificar horário de funcionamento
     if (!isWithinWorkingHours(startDateBrasilia)) {
-        return { 
-            valid: false, 
-            error: "Horário fora do expediente. Funcionamos das 9h às 12h e das 13h às 18h." 
+        return {
+            valid: false,
+            error: "Horário fora do expediente. Funcionamos das 9h às 12h e das 13h às 18h."
         };
     }
-    
+
     return { valid: true };
 }
 
@@ -309,9 +309,9 @@ const scheduleTool = tool({
             // Verificar se o horário está livre (com gap de 15 min)
             const checkStart = new Date(startDate.getTime() - MIN_GAP_MINUTES * 60 * 1000);
             const checkEnd = new Date(endDate.getTime() + MIN_GAP_MINUTES * 60 * 1000);
-            
+
             const availability = await isSlotAvailable(
-                checkStart.toISOString(), 
+                checkStart.toISOString(),
                 checkEnd.toISOString()
             );
 
