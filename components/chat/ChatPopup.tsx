@@ -8,9 +8,19 @@ import { motion, AnimatePresence } from 'motion/react';
 import { FiMessageCircle, FiX, FiSend, FiMic, FiSquare } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
 
+// Variações de mensagem inicial - será escolhida aleatoriamente
 const INITIAL_MESSAGES = [
-    'Oi! Aqui é a Clara, do escritório do Dr. Rafael. Você está buscando ajuda com alguma questão jurídica? Pode ser contrato, família, consumidor...',
+    'Oi! Aqui é a Clara, do escritório do Dr. Rafael. Você está passando por algum problema que precisa de um advogado?',
+    'Oi! Sou a Clara, do escritório do Dr. Rafael. Me conta, o que está acontecendo?',
+    'Oi! Aqui é a Clara, secretária do Dr. Rafael. Está precisando de ajuda com alguma situação?',
+    'Oi! Clara aqui, do escritório do Dr. Rafael. Tem algo te preocupando que a gente possa ajudar?',
+    'Oi! Sou a Clara, do escritório do Dr. Rafael. Qual situação te trouxe aqui hoje?',
 ];
+
+// Função para pegar mensagem aleatória
+function getRandomInitialMessage() {
+    return INITIAL_MESSAGES[Math.floor(Math.random() * INITIAL_MESSAGES.length)];
+}
 
 // Configurações de delay para parecer humano
 const READING_SPEED_MS_PER_CHAR = 35; // ~170 palavras/min (leitura normal)
@@ -46,6 +56,7 @@ export function ChatPopup() {
     const [isThinking, setIsThinking] = useState(false); // Clara está "lendo" a mensagem
     const [isTypingDelayed, setIsTypingDelayed] = useState(false); // Clara está "digitando"
     const [pendingMessage, setPendingMessage] = useState<string | null>(null);
+    const [initialMessage] = useState(() => getRandomInitialMessage()); // Mensagem aleatória fixada
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -255,7 +266,7 @@ export function ChatPopup() {
                                 </div>
                                 <div className="flex-1">
                                     <p className="mb-1 text-xs text-stone-500">Clara · Secretária</p>
-                                    <p className="text-sm font-medium text-stone-900">{INITIAL_MESSAGES[0]}</p>
+                                    <p className="text-sm font-medium text-stone-900">{initialMessage}</p>
                                 </div>
                             </div>
                             <div className="mt-3 border-t border-stone-100 pt-3">
@@ -332,29 +343,23 @@ export function ChatPopup() {
                         <div className="h-[320px] space-y-4 overflow-y-auto bg-stone-50/50 p-4">
                             {/* Initial greeting */}
                             {messages.length === 0 && (
-                                <div className="space-y-2">
-                                    {INITIAL_MESSAGES.map((msg, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: i * 0.3 }}
-                                            className="flex gap-2"
-                                        >
-                                            <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
-                                                <Image
-                                                    src="/images/clara.jpeg"
-                                                    alt="Clara"
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                            <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white px-4 py-2 shadow-sm">
-                                                <p className="text-sm text-stone-700">{msg}</p>
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex gap-2"
+                                >
+                                    <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                                        <Image
+                                            src="/images/clara.jpeg"
+                                            alt="Clara"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                    <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white px-4 py-2 shadow-sm">
+                                        <p className="text-sm text-stone-700">{initialMessage}</p>
+                                    </div>
+                                </motion.div>
                             )}
 
                             {/* Chat messages */}
