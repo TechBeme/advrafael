@@ -54,14 +54,14 @@ export function ChatPopup() {
     const [isRecording, setIsRecording] = useState(false);
     const [isTranscribing, setIsTranscribing] = useState(false);
     const [initialMessage] = useState(() => getRandomInitialMessage());
-    
+
     // Estados para controle de delays humanizados
     const [isTypingIndicatorVisible, setIsTypingIndicatorVisible] = useState(false); // Mostra "digitando..."
     const [visibleMessages, setVisibleMessages] = useState<UIMessage[]>([]); // Mensagens realmente mostradas na UI
     const [pendingUserMessages, setPendingUserMessages] = useState<string[]>([]); // Fila de mensagens do usuário
     const [isUserTyping, setIsUserTyping] = useState(false); // Usuário está digitando
     const [isProcessingResponse, setIsProcessingResponse] = useState(false); // Clara está processando
-    
+
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -91,44 +91,44 @@ export function ChatPopup() {
     const processResponseQueue = useCallback(async () => {
         if (isProcessingQueueRef.current || responseQueueRef.current.length === 0) return;
         if (isUserTyping) return; // Espera usuário terminar de digitar
-        
+
         isProcessingQueueRef.current = true;
-        
+
         while (responseQueueRef.current.length > 0) {
             // Verifica se usuário começou a digitar
             if (isUserTyping) {
                 isProcessingQueueRef.current = false;
                 return;
             }
-            
+
             const item = responseQueueRef.current[0];
-            
+
             // Fase 1: Tempo de leitura (nada acontece na UI)
             await new Promise(resolve => setTimeout(resolve, item.readingDelay));
-            
+
             // Verifica novamente se usuário está digitando
             if (isUserTyping) {
                 isProcessingQueueRef.current = false;
                 return;
             }
-            
+
             // Fase 2: Tempo de digitação (mostra indicador)
             setIsTypingIndicatorVisible(true);
             await new Promise(resolve => setTimeout(resolve, item.typingDelay));
-            
+
             // Verifica novamente
             if (isUserTyping) {
                 setIsTypingIndicatorVisible(false);
                 isProcessingQueueRef.current = false;
                 return;
             }
-            
+
             // Fase 3: Mostra a mensagem
             setIsTypingIndicatorVisible(false);
             setVisibleMessages(prev => [...prev, item.message]);
             responseQueueRef.current.shift();
         }
-        
+
         setIsProcessingResponse(false);
         isProcessingQueueRef.current = false;
     }, [isUserTyping]);
@@ -144,23 +144,23 @@ export function ChatPopup() {
     useEffect(() => {
         if (status === 'ready' && messages.length > 0) {
             const lastMessage = messages[messages.length - 1];
-            
+
             // Se é mensagem do assistant que ainda não está visível
             if (lastMessage.role === 'assistant') {
                 const isAlreadyVisible = visibleMessages.some(m => m.id === lastMessage.id);
                 const isInQueue = responseQueueRef.current.some(item => item.message.id === lastMessage.id);
-                
+
                 if (!isAlreadyVisible && !isInQueue) {
                     const responseText = getMessageContent(lastMessage);
                     const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
                     const userMsgText = lastUserMsg ? getMessageContent(lastUserMsg) : '';
-                    
+
                     responseQueueRef.current.push({
                         message: lastMessage,
                         readingDelay: calculateReadingDelay(userMsgText),
                         typingDelay: calculateTypingDelay(responseText.length),
                     });
-                    
+
                     if (!isUserTyping) {
                         processResponseQueue();
                     }
@@ -173,7 +173,7 @@ export function ChatPopup() {
     useEffect(() => {
         const userMessages = messages.filter(m => m.role === 'user');
         const visibleUserMessages = visibleMessages.filter(m => m.role === 'user');
-        
+
         if (userMessages.length > visibleUserMessages.length) {
             // Adiciona mensagens do usuário que ainda não estão visíveis
             const newUserMessages = userMessages.filter(
@@ -231,17 +231,17 @@ export function ChatPopup() {
     // Detecta quando usuário está digitando e reseta o timeout
     const handleInputChange = (value: string) => {
         setInputValue(value);
-        
+
         // Sinaliza que usuário está digitando
         if (value.length > 0) {
             setIsUserTyping(true);
             setIsTypingIndicatorVisible(false); // Esconde indicador de digitação da Clara
-            
+
             // Reseta o timeout
             if (userTypingTimeoutRef.current) {
                 clearTimeout(userTypingTimeoutRef.current);
             }
-            
+
             // Se usuário não enviar em 60s, considera que terminou
             userTypingTimeoutRef.current = setTimeout(() => {
                 setIsUserTyping(false);
@@ -255,9 +255,9 @@ export function ChatPopup() {
         if (userTypingTimeoutRef.current) {
             clearTimeout(userTypingTimeoutRef.current);
         }
-        
+
         setIsProcessingResponse(true);
-        
+
         // Envia a mensagem para a API
         sendMessage({
             role: 'user',
