@@ -6,6 +6,7 @@ import { DefaultChatTransport } from 'ai';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { FiMessageCircle, FiX, FiSend, FiMic, FiSquare } from 'react-icons/fi';
+import ReactMarkdown from 'react-markdown';
 import { cn } from '@/lib/utils';
 
 // Variações de mensagem inicial - será escolhida aleatoriamente
@@ -488,7 +489,13 @@ export function ChatPopup() {
                                                 : 'rounded-tl-sm bg-white text-stone-700 shadow-sm'
                                         )}
                                     >
-                                        <p className="whitespace-pre-wrap text-sm">{getMessageContent(message)}</p>
+                                        {message.role === 'user' ? (
+                                            <p className="whitespace-pre-wrap text-sm">{getMessageContent(message)}</p>
+                                        ) : (
+                                            <div className="prose prose-sm prose-stone max-w-none text-sm [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_strong]:text-stone-800 [&_a]:text-accent [&_a]:underline">
+                                                <ReactMarkdown>{getMessageContent(message)}</ReactMarkdown>
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
