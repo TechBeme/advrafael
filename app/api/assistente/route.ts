@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { convertToModelMessages, streamText, tool, type UIMessage } from "ai";
+import { convertToModelMessages, streamText, tool, stepCountIs, type UIMessage } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import {
@@ -435,6 +435,7 @@ export async function POST(request: Request) {
                 ver_agenda: viewCalendarTool,
                 agendar: scheduleTool,
             },
+            stopWhen: stepCountIs(5), // Permite até 5 passos (tool calls + respostas)
             onFinish: ({ text, toolCalls, finishReason, usage }) => {
                 console.log("[API:assistente] Stream finalizado", {
                     finishReason,
