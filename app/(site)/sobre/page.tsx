@@ -1,12 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Container, Section, SectionHeader } from "@/components/ui/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import { buttonClasses } from "@/components/ui/Button";
 import { FadeIn, StaggerFadeIn } from "@/components/ui/Animate";
 import { professionalSummary, values as officeValues } from "@/content/bio";
 import { buildMetadata } from "@/lib/seo";
+import { SobreButtons } from "./SobreButtons";
 
 export const metadata = buildMetadata({
     title: "Sobre",
@@ -78,18 +77,7 @@ export default function SobrePage() {
                                         Comunicação clara, check-ins frequentes e previsibilidade de custos.
                                     </p>
                                     <div className="flex flex-wrap gap-3">
-                                        <Link
-                                            href="/contato"
-                                            className={buttonClasses({ variant: "primary", size: "sm" })}
-                                        >
-                                            Agendar contato
-                                        </Link>
-                                        <Link
-                                            href="/artigos"
-                                            className={buttonClasses({ variant: "secondary", size: "sm" })}
-                                        >
-                                            Ver artigos
-                                        </Link>
+                                        <SobreButtons />
                                     </div>
                                 </CardContent>
                             </Card>

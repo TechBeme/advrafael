@@ -6,10 +6,10 @@ import { ptBR } from "date-fns/locale";
 import { Prose } from "@/components/content/Prose";
 import { Container, Section } from "@/components/ui/Section";
 import { Badge } from "@/components/ui/Badge";
-import { buttonClasses } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/Animate";
 import { getArticleBySlug, getArticlesIndex } from "@/lib/content";
 import { siteConfig } from "@/lib/seo";
+import { ArticleButtons } from "./ArticleButtons";
 
 export async function generateStaticParams() {
     const articles = await getArticlesIndex();
@@ -120,18 +120,7 @@ export default async function ArticlePage({
                         </FadeIn>
 
                         <FadeIn delay={0.12} className="flex flex-wrap gap-3">
-                            <Link
-                                href="/contato"
-                                className={buttonClasses({ variant: "primary", size: "md" })}
-                            >
-                                Falar sobre o caso
-                            </Link>
-                            <Link
-                                href="/artigos"
-                                className={buttonClasses({ variant: "secondary", size: "md" })}
-                            >
-                                Voltar para artigos
-                            </Link>
+                            <ArticleButtons />
                         </FadeIn>
                     </Container>
                 </Section>
