@@ -59,17 +59,19 @@ export function ChatPopup() {
     // Estados para controle de delays humanizados
     const [isTypingIndicatorVisible, setIsTypingIndicatorVisible] = useState(false); // Mostra "digitando..."
     const [visibleMessages, setVisibleMessages] = useState<UIMessage[]>([]); // Mensagens realmente mostradas na UI
-    const [pendingUserMessages, setPendingUserMessages] = useState<string[]>([]); // Fila de mensagens do usuário
-    const [isUserTyping, setIsUserTyping] = useState(false); // Usuário está digitando
-    const [isProcessingResponse, setIsProcessingResponse] = useState(false); // Clara está processando
-
+    
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
+    
+    // Refs para controle de timing (precisam ser refs para funcionar dentro de async/await)
     const userTypingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const responseQueueRef = useRef<{ message: UIMessage; readingDelay: number; typingDelay: number }[]>([]);
     const isProcessingQueueRef = useRef(false);
+    const isUserTypingRef = useRef(false); // Ref para checar em tempo real
+    const currentDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Para cancelar delays em andamento
+    const shouldCancelRef = useRef(false); // Flag para cancelar processamento
 
     const { messages, sendMessage, status } = useChat({
         transport: new DefaultChatTransport({
@@ -88,16 +90,43 @@ export function ChatPopup() {
             .join('');
     }, []);
 
+    // Cancela todo o processamento pendente
+    const cancelPendingProcessing = useCallback(() => {
+        shouldCancelRef.current = true;
+        setIsTypingIndicatorVisible(false);
+        
+        // Cancela qualquer delay em andamento
+        if (currentDelayTimeoutRef.current) {
+            clearTimeout(currentDelayTimeoutRef.current);
+            currentDelayTimeoutRef.current = null;
+        }
+        
+        isProcessingQueueRef.current = false;
+    }, []);
+
+    // Função de delay cancelável
+    const cancelableDelay = useCallback((ms: number): Promise<boolean> => {
+        return new Promise((resolve) => {
+            currentDelayTimeoutRef.current = setTimeout(() => {
+                currentDelayTimeoutRef.current = null;
+                // Retorna true se NÃO foi cancelado
+                resolve(!shouldCancelRef.current && !isUserTypingRef.current);
+            }, ms);
+        });
+    }, []);
+
     // Processa a fila de respostas pendentes
     const processResponseQueue = useCallback(async () => {
         if (isProcessingQueueRef.current || responseQueueRef.current.length === 0) return;
-        if (isUserTyping) return; // Espera usuário terminar de digitar
+        if (isUserTypingRef.current) return;
 
         isProcessingQueueRef.current = true;
+        shouldCancelRef.current = false;
 
         while (responseQueueRef.current.length > 0) {
-            // Verifica se usuário começou a digitar
-            if (isUserTyping) {
+            // Verifica se deve cancelar
+            if (shouldCancelRef.current || isUserTypingRef.current) {
+                setIsTypingIndicatorVisible(false);
                 isProcessingQueueRef.current = false;
                 return;
             }
@@ -105,20 +134,16 @@ export function ChatPopup() {
             const item = responseQueueRef.current[0];
 
             // Fase 1: Tempo de leitura (nada acontece na UI)
-            await new Promise(resolve => setTimeout(resolve, item.readingDelay));
-
-            // Verifica novamente se usuário está digitando
-            if (isUserTyping) {
+            const continueAfterReading = await cancelableDelay(item.readingDelay);
+            if (!continueAfterReading) {
                 isProcessingQueueRef.current = false;
                 return;
             }
 
             // Fase 2: Tempo de digitação (mostra indicador)
             setIsTypingIndicatorVisible(true);
-            await new Promise(resolve => setTimeout(resolve, item.typingDelay));
-
-            // Verifica novamente
-            if (isUserTyping) {
+            const continueAfterTyping = await cancelableDelay(item.typingDelay);
+            if (!continueAfterTyping) {
                 setIsTypingIndicatorVisible(false);
                 isProcessingQueueRef.current = false;
                 return;
@@ -130,16 +155,16 @@ export function ChatPopup() {
             responseQueueRef.current.shift();
         }
 
-        setIsProcessingResponse(false);
         isProcessingQueueRef.current = false;
-    }, [isUserTyping]);
+    }, [cancelableDelay]);
 
-    // Quando usuário para de digitar, processa a fila
+    // Quando usuário para de digitar E input está vazio, processa a fila
     useEffect(() => {
-        if (!isUserTyping && responseQueueRef.current.length > 0) {
+        if (!isUserTypingRef.current && inputValue === '' && responseQueueRef.current.length > 0) {
+            shouldCancelRef.current = false;
             processResponseQueue();
         }
-    }, [isUserTyping, processResponseQueue]);
+    }, [inputValue, processResponseQueue]);
 
     // Monitora novas mensagens do assistant e adiciona à fila
     useEffect(() => {
@@ -162,13 +187,14 @@ export function ChatPopup() {
                         typingDelay: calculateTypingDelay(responseText.length),
                     });
 
-                    if (!isUserTyping) {
+                    // Só inicia processamento se usuário não está digitando E input está vazio
+                    if (!isUserTypingRef.current && inputValue === '') {
                         processResponseQueue();
                     }
                 }
             }
         }
-    }, [messages, status, visibleMessages, getMessageContent, isUserTyping, processResponseQueue]);
+    }, [messages, status, visibleMessages, getMessageContent, inputValue, processResponseQueue]);
 
     // Sincroniza mensagens do usuário imediatamente
     useEffect(() => {
@@ -229,24 +255,38 @@ export function ChatPopup() {
         setIsOpen(false);
     };
 
-    // Detecta quando usuário está digitando e reseta o timeout
+    // Detecta quando usuário está digitando e cancela processamento da Clara
     const handleInputChange = (value: string) => {
         setInputValue(value);
 
-        // Sinaliza que usuário está digitando
+        // Limpa timeout anterior
+        if (userTypingTimeoutRef.current) {
+            clearTimeout(userTypingTimeoutRef.current);
+            userTypingTimeoutRef.current = null;
+        }
+
         if (value.length > 0) {
-            setIsUserTyping(true);
-            setIsTypingIndicatorVisible(false); // Esconde indicador de digitação da Clara
+            // Usuário está digitando - CANCELA TUDO
+            isUserTypingRef.current = true;
+            cancelPendingProcessing();
 
-            // Reseta o timeout
-            if (userTypingTimeoutRef.current) {
-                clearTimeout(userTypingTimeoutRef.current);
-            }
-
-            // Se usuário não enviar em 60s, considera que terminou
+            // Se usuário não enviar em 60s, considera que terminou (timeout)
             userTypingTimeoutRef.current = setTimeout(() => {
-                setIsUserTyping(false);
+                isUserTypingRef.current = false;
+                // Após timeout, se ainda tem texto, processa a fila
+                if (responseQueueRef.current.length > 0) {
+                    shouldCancelRef.current = false;
+                    processResponseQueue();
+                }
             }, USER_IDLE_TIMEOUT_MS);
+        } else {
+            // Input está vazio - usuário apagou tudo
+            isUserTypingRef.current = false;
+            // Se tem respostas pendentes e não está processando, inicia
+            if (responseQueueRef.current.length > 0 && !isProcessingQueueRef.current) {
+                shouldCancelRef.current = false;
+                processResponseQueue();
+            }
         }
     };
 
@@ -255,9 +295,10 @@ export function ChatPopup() {
         // Limpa o timeout de digitação
         if (userTypingTimeoutRef.current) {
             clearTimeout(userTypingTimeoutRef.current);
+            userTypingTimeoutRef.current = null;
         }
-
-        setIsProcessingResponse(true);
+        
+        isUserTypingRef.current = false;
 
         // Envia a mensagem para a API
         sendMessage({
@@ -272,7 +313,6 @@ export function ChatPopup() {
 
         const text = inputValue.trim();
         setInputValue('');
-        setIsUserTyping(false); // Usuário terminou de digitar esta mensagem
         handleSendMessage(text);
     };
 
@@ -327,7 +367,7 @@ export function ChatPopup() {
             const { text } = await response.json();
             if (text && text.trim()) {
                 setInputValue('');
-                setIsUserTyping(false);
+                isUserTypingRef.current = false;
                 handleSendMessage(text.trim());
             }
         } catch (error) {
