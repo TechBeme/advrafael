@@ -6,7 +6,7 @@ export const contactSchema = z.object({
         .trim()
         .min(3, "Informe seu nome completo.")
         .max(120, "Nome muito longo."),
-    email: z.string().trim().email("E-mail inválido."),
+    email: z.string().trim().email("E-mail inválido.").optional().or(z.literal('')),
     phone: z
         .string()
         .trim()

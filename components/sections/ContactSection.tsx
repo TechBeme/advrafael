@@ -48,7 +48,7 @@ export function ContactSection() {
             // Mapear campos do formulário para o formato da API
             const payload = {
                 name: data.nome,
-                email: `${data.whatsapp.replace(/\D/g, '')}@whatsapp.temp`, // Email temporário baseado no WhatsApp
+                email: '', // E-mail não é coletado no formulário
                 phone: data.whatsapp,
                 reason: 'Contato via site',
                 message: data.mensagem,
