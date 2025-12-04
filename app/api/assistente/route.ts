@@ -11,7 +11,112 @@ import {
 export const maxDuration = 30;
 
 const SLOT_DURATION_MINUTES = 30;
+const MIN_HOURS_ADVANCE = 24; // Mínimo de 24h de antecedência
+const MIN_GAP_MINUTES = 15; // Mínimo de 15 min entre agendamentos
 const TIMEZONE = "America/Sao_Paulo";
+
+// Feriados nacionais do Brasil (fixos + móveis para 2025 e 2026)
+const FERIADOS_NACIONAIS: string[] = [
+    // 2025
+    "2025-01-01", // Confraternização Universal
+    "2025-03-03", // Carnaval
+    "2025-03-04", // Carnaval
+    "2025-04-18", // Sexta-feira Santa
+    "2025-04-21", // Tiradentes
+    "2025-05-01", // Dia do Trabalho
+    "2025-06-19", // Corpus Christi
+    "2025-09-07", // Independência
+    "2025-10-12", // Nossa Senhora Aparecida
+    "2025-11-02", // Finados
+    "2025-11-15", // Proclamação da República
+    "2025-11-20", // Consciência Negra
+    "2025-12-25", // Natal
+    // 2026
+    "2026-01-01", // Confraternização Universal
+    "2026-02-16", // Carnaval
+    "2026-02-17", // Carnaval
+    "2026-04-03", // Sexta-feira Santa
+    "2026-04-21", // Tiradentes
+    "2026-05-01", // Dia do Trabalho
+    "2026-06-04", // Corpus Christi
+    "2026-09-07", // Independência
+    "2026-10-12", // Nossa Senhora Aparecida
+    "2026-11-02", // Finados
+    "2026-11-15", // Proclamação da República
+    "2026-11-20", // Consciência Negra
+    "2026-12-25", // Natal
+];
+
+function isFeriado(dateStr: string): boolean {
+    return FERIADOS_NACIONAIS.includes(dateStr);
+}
+
+function isWeekend(date: Date): boolean {
+    const dayOfWeek = date.getDay();
+    return dayOfWeek === 0 || dayOfWeek === 6; // Domingo = 0, Sábado = 6
+}
+
+function isWithinWorkingHours(date: Date): boolean {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const timeInMinutes = hours * 60 + minutes;
+    
+    // Manhã: 9:00 - 12:00 (540 - 720)
+    // Tarde: 13:00 - 18:00 (780 - 1080)
+    const morningStart = 9 * 60; // 9:00
+    const morningEnd = 12 * 60; // 12:00
+    const afternoonStart = 13 * 60; // 13:00
+    const afternoonEnd = 18 * 60; // 18:00
+    
+    return (
+        (timeInMinutes >= morningStart && timeInMinutes < morningEnd) ||
+        (timeInMinutes >= afternoonStart && timeInMinutes < afternoonEnd)
+    );
+}
+
+function validateSchedulingTime(startDateTime: string): { valid: boolean; error?: string } {
+    const startDate = new Date(startDateTime);
+    const now = new Date();
+    
+    // Converter para fuso de Brasília para validações
+    const startDateBrasilia = new Date(startDate.toLocaleString("en-US", { timeZone: TIMEZONE }));
+    const dateStr = startDateTime.split("T")[0];
+    
+    // Verificar antecedência mínima de 24h
+    const hoursUntilAppointment = (startDate.getTime() - now.getTime()) / (1000 * 60 * 60);
+    if (hoursUntilAppointment < MIN_HOURS_ADVANCE) {
+        return { 
+            valid: false, 
+            error: `Agendamentos precisam ser feitos com pelo menos ${MIN_HOURS_ADVANCE} horas de antecedência.` 
+        };
+    }
+    
+    // Verificar fim de semana
+    if (isWeekend(startDateBrasilia)) {
+        return { 
+            valid: false, 
+            error: "Não é possível agendar em fins de semana (sábado e domingo)." 
+        };
+    }
+    
+    // Verificar feriado
+    if (isFeriado(dateStr)) {
+        return { 
+            valid: false, 
+            error: "Não é possível agendar em feriados nacionais." 
+        };
+    }
+    
+    // Verificar horário de funcionamento
+    if (!isWithinWorkingHours(startDateBrasilia)) {
+        return { 
+            valid: false, 
+            error: "Horário fora do expediente. Funcionamos das 9h às 12h e das 13h às 18h." 
+        };
+    }
+    
+    return { valid: true };
+}
 
 function buildSystemPrompt() {
     // Data atual no fuso horário de Brasília
@@ -47,20 +152,21 @@ O que coletar naturalmente na conversa:
 4. Preferência: consultoria online ou presencial em BH
 5. Disponibilidade de horário
 
-Agendamento:
+Regras de Agendamento:
 - IMPORTANTE: Use a ferramenta "ver_agenda" para consultar os horários já ocupados do Dr. Rafael.
-- O escritório funciona de segunda a sexta, das 09:30 às 12:00 e das 14:00 às 18:30 (horário de Brasília, GMT-3).
+- Horário de funcionamento: Segunda a Sexta, das 9h às 12h e das 13h às 18h (horário de Brasília).
+- NÃO agende em sábados, domingos ou feriados nacionais.
+- Agendamentos devem ser feitos com pelo menos 24 horas de antecedência.
+- Deixe pelo menos 15 minutos de intervalo entre um agendamento e outro.
 - Consultas têm duração de 30 minutos.
-- Proponha horários LIVRES dentro desses períodos, SEMPRE a partir da data atual.
 - NUNCA agende no passado. Só proponha datas futuras.
 - Ao usar a ferramenta "agendar", use o formato ISO com timezone -03:00, ex: 2025-12-05T10:00:00-03:00
-- Quando o cliente confirmar um horário, use a ferramenta "agendar" para criar o evento no calendário.
 - Informe que o Dr. Rafael ou a equipe confirmará por WhatsApp.
 
 Fluxo ideal:
 1. Entenda o caso do cliente
 2. Use "ver_agenda" para ver os compromissos existentes
-3. Proponha 2-3 horários livres (sempre datas futuras!)
+3. Proponha 2-3 horários livres (respeitando todas as regras acima)
 4. Quando confirmado, use "agendar" para registrar no calendário`;
 }
 
@@ -132,11 +238,24 @@ const viewCalendarTool = tool({
             events: formattedEvents.slice(0, 5) // Log apenas os 5 primeiros
         });
 
+        // Listar feriados próximos para informar a IA
+        const feriadosProximos = FERIADOS_NACIONAIS.filter(f => {
+            const feriadoDate = new Date(f + "T12:00:00-03:00");
+            return feriadoDate >= now && feriadoDate <= timeMax;
+        });
+
         return {
             success: true,
             message: `Encontrados ${formattedEvents.length} compromissos nos próximos ${input.daysAhead} dias.`,
             events: formattedEvents,
-            horarioFuncionamento: "Seg-Sex: 09:30-12:00 e 14:00-18:30",
+            horarioFuncionamento: "Seg-Sex: 9h-12h e 13h-18h",
+            regras: {
+                antecedenciaMinima: "24 horas",
+                intervaloEntreConsultas: "15 minutos",
+                duracaoConsulta: "30 minutos",
+                diasIndisponiveis: "Sábados, domingos e feriados",
+            },
+            feriadosProximos: feriadosProximos.length > 0 ? feriadosProximos : undefined,
         };
     },
 });
@@ -144,7 +263,7 @@ const viewCalendarTool = tool({
 // Tool para agendar
 const scheduleTool = tool({
     description:
-        "Criar um agendamento no calendário do Dr. Rafael. Use após confirmar o horário com o cliente.",
+        "Criar um agendamento no calendário do Dr. Rafael. Use após confirmar o horário com o cliente. Lembre-se: mínimo 24h de antecedência, apenas dias úteis, horário comercial.",
     inputSchema: z.object({
         clientName: z.string().min(2).describe("Nome do cliente"),
         clientPhone: z.string().min(8).describe("Telefone ou WhatsApp do cliente"),
@@ -167,6 +286,16 @@ const scheduleTool = tool({
         });
 
         try {
+            // Validar regras de agendamento
+            const validation = validateSchedulingTime(input.startDateTime);
+            if (!validation.valid) {
+                console.warn("[TOOL:agendar] Validação falhou", { error: validation.error });
+                return {
+                    success: false,
+                    message: validation.error,
+                };
+            }
+
             // Calcular horário de término (30 minutos depois)
             const startDate = new Date(input.startDateTime);
             const endDate = new Date(startDate.getTime() + SLOT_DURATION_MINUTES * 60 * 1000);
@@ -177,16 +306,22 @@ const scheduleTool = tool({
                 end: endDateTime,
             });
 
-            // Verificar se o horário está livre
-            const availability = await isSlotAvailable(input.startDateTime, endDateTime);
+            // Verificar se o horário está livre (com gap de 15 min)
+            const checkStart = new Date(startDate.getTime() - MIN_GAP_MINUTES * 60 * 1000);
+            const checkEnd = new Date(endDate.getTime() + MIN_GAP_MINUTES * 60 * 1000);
+            
+            const availability = await isSlotAvailable(
+                checkStart.toISOString(), 
+                checkEnd.toISOString()
+            );
 
             if (!availability.available) {
-                console.warn("[TOOL:agendar] Horário ocupado", {
+                console.warn("[TOOL:agendar] Horário ocupado ou muito próximo de outro", {
                     conflito: availability.conflictWith
                 });
                 return {
                     success: false,
-                    message: `Este horário já está ocupado${availability.conflictWith ? ` (${availability.conflictWith})` : ""}. Por favor, escolha outro horário.`,
+                    message: `Este horário está ocupado ou muito próximo de outro compromisso${availability.conflictWith ? ` (${availability.conflictWith})` : ""}. Preciso de pelo menos 15 minutos de intervalo entre consultas.`,
                 };
             }
 
@@ -288,7 +423,7 @@ export async function POST(request: Request) {
         });
 
         console.log("[API:assistente] Iniciando stream com Gemini 2.5 Flash...");
-        
+
         const systemPrompt = buildSystemPrompt();
         console.log("[API:assistente] Data atual no prompt:", systemPrompt.match(/DATA E HORA ATUAL: (.+)/)?.[1]);
 
