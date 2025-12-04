@@ -232,7 +232,7 @@ export function LandingNavbar() {
 
                             <div className="absolute bottom-6 left-6 right-6">
                                 <p className="text-center text-xs text-stone-400">
-                                    OAB/MG 000.000
+                                    OAB/MG 246.280
                                 </p>
                             </div>
                         </motion.div>

@@ -33,7 +33,7 @@ export function FooterSection() {
                                 <p className="mb-1 font-display text-xl font-semibold text-stone-900">
                                     Rafael Vieira
                                 </p>
-                                <p className="text-sm text-stone-600">Advogado | OAB/MG 000.000</p>
+                                <p className="text-sm text-stone-600">Advogado | OAB/MG 246.280</p>
                             </div>
                         </div>
 
@@ -87,7 +87,7 @@ export function FooterSection() {
                         <p className="mx-auto max-w-3xl text-center text-xs text-stone-400">
                             Este site tem caráter informativo e não constitui aconselhamento jurídico. A relação
                             advogado-cliente só se estabelece mediante contratação formal. Responsável técnico:
-                            Rafael Vieira, OAB/MG 000.000.
+                            Rafael Vieira, OAB/MG 246.280.
                         </p>
                     </div>
                 </FadeIn>

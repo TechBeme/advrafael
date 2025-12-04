@@ -59,12 +59,12 @@ export function ChatPopup() {
     // Estados para controle de delays humanizados
     const [isTypingIndicatorVisible, setIsTypingIndicatorVisible] = useState(false); // Mostra "digitando..."
     const [visibleMessages, setVisibleMessages] = useState<UIMessage[]>([]); // Mensagens realmente mostradas na UI
-    
+
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
-    
+
     // Refs para controle de timing (precisam ser refs para funcionar dentro de async/await)
     const userTypingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const responseQueueRef = useRef<{ message: UIMessage; readingDelay: number; typingDelay: number }[]>([]);
@@ -94,13 +94,13 @@ export function ChatPopup() {
     const cancelPendingProcessing = useCallback(() => {
         shouldCancelRef.current = true;
         setIsTypingIndicatorVisible(false);
-        
+
         // Cancela qualquer delay em andamento
         if (currentDelayTimeoutRef.current) {
             clearTimeout(currentDelayTimeoutRef.current);
             currentDelayTimeoutRef.current = null;
         }
-        
+
         isProcessingQueueRef.current = false;
     }, []);
 
@@ -297,7 +297,7 @@ export function ChatPopup() {
             clearTimeout(userTypingTimeoutRef.current);
             userTypingTimeoutRef.current = null;
         }
-        
+
         isUserTypingRef.current = false;
 
         // Envia a mensagem para a API

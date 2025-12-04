@@ -62,7 +62,7 @@ export function HeroSection() {
                     <div className="order-2 lg:order-1">
                         <FadeIn delay={0.1}>
                             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">
-                                Advogado • OAB/MG 000.000
+                                Advogado • OAB/MG 246.280
                             </p>
                         </FadeIn>
 
