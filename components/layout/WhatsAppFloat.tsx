@@ -3,7 +3,7 @@
 import { FaWhatsapp } from "react-icons/fa";
 import { motion } from "motion/react";
 
-const WHATSAPP_NUMBER = "5531975321410";
+const WHATSAPP_NUMBER = "553190726984";
 const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Vim pelo site e gostaria de tirar uma dúvida.");
 
 export function WhatsAppFloat() {

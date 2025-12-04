@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 
 const WHATSAPP_LINK =
-    'https://wa.me/5531975321410?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os%20jur%C3%ADdicos.';
+    'https://wa.me/553190726984?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os%20jur%C3%ADdicos.';
 
 const navLinks = [
     { href: '#hero', label: 'Início' },
@@ -86,8 +87,13 @@ export function LandingNavbar() {
                                 scrollToSection('#hero');
                             }}
                         >
-                            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
-                                <span className="font-display text-lg font-bold text-white">RV</span>
+                            <div className="relative h-12 w-12 overflow-hidden rounded-xl shadow-lg transition-transform group-hover:scale-105">
+                                <Image
+                                    src="/images/logo.jpeg"
+                                    alt="Logo Dr. Rafael Vieira"
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
                             <div className="hidden sm:block">
                                 <p className="font-display text-lg font-semibold text-stone-900 transition-colors group-hover:text-accent">

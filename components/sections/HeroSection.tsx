@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/motion';
 
 const WHATSAPP_LINK =
-    'https://wa.me/5531975321410?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os%20jur%C3%ADdicos.';
+    'https://wa.me/553190726984?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os%20jur%C3%ADdicos.';
 
 const institutionLogos = [
     {

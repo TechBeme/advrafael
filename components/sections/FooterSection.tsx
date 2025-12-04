@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiMail, FiMapPin } from 'react-icons/fi';
 import { FadeIn } from '@/components/motion';
 
-const WHATSAPP_NUMBER = '5531975321410';
+const WHATSAPP_NUMBER = '553190726984';
 
 export function FooterSection() {
     const currentYear = new Date().getFullYear();
@@ -19,11 +20,21 @@ export function FooterSection() {
                 <FadeIn>
                     <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
                         {/* Logo e info */}
-                        <div className="text-center md:text-left">
-                            <p className="mb-1 font-display text-xl font-semibold text-stone-900">
-                                Rafael Vieira
-                            </p>
-                            <p className="text-sm text-stone-600">Advogado | OAB/MG 000.000</p>
+                        <div className="flex items-center gap-4 text-center md:text-left">
+                            <div className="relative h-14 w-14 overflow-hidden rounded-xl shadow-md">
+                                <Image
+                                    src="/images/logo.jpeg"
+                                    alt="Logo Dr. Rafael Vieira"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div>
+                                <p className="mb-1 font-display text-xl font-semibold text-stone-900">
+                                    Rafael Vieira
+                                </p>
+                                <p className="text-sm text-stone-600">Advogado | OAB/MG 000.000</p>
+                            </div>
                         </div>
 
                         {/* Social links */}

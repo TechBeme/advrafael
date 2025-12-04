@@ -22,7 +22,7 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const WHATSAPP_NUMBER = '5531975321410';
+const WHATSAPP_NUMBER = '553190726984';
 const WHATSAPP_MESSAGE = encodeURIComponent(
     'Olá! Vim pelo site e gostaria de tirar uma dúvida sobre meu caso.'
 );
