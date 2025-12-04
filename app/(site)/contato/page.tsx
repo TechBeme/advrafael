@@ -1,13 +1,11 @@
-import { FiMail } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Container, Section } from "@/components/ui/Section";
-import { buttonClasses } from "@/components/ui/Button";
 import { ContactForm } from "@/components/content/ContactForm";
 import { FadeIn, StaggerFadeIn } from "@/components/ui/Animate";
 import { buildMetadata } from "@/lib/seo";
+import { ContactButtons } from "./ContactButtons";
 
 export const metadata = buildMetadata({
     title: "Contato",
@@ -55,22 +53,7 @@ export default function ContatoPage() {
                                 com indicação de próximos passos e documentos necessários.
                             </p>
                             <div className="flex flex-wrap gap-3">
-                                <a
-                                    className={buttonClasses({ variant: "primary", size: "md" })}
-                                    href={CONTACT.whatsapp}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <FaWhatsapp className="h-5 w-5" aria-hidden="true" />
-                                    WhatsApp
-                                </a>
-                                <a
-                                    className={buttonClasses({ variant: "secondary", size: "md" })}
-                                    href={`mailto:${CONTACT.email}`}
-                                >
-                                    <FiMail className="h-5 w-5" aria-hidden="true" />
-                                    {CONTACT.email}
-                                </a>
+                                <ContactButtons email={CONTACT.email} whatsapp={CONTACT.whatsapp} />
                             </div>
                         </div>
                         <Card className="bg-white/90 shadow-card">

@@ -115,7 +115,7 @@ export const MotionButton = forwardRef<HTMLButtonElement, ButtonProps>(
     ) {
         // Separate motion props from HTML button props to avoid type conflicts
         const { onAnimationStart, onDragStart, onDragEnd, onDrag, ...buttonProps } = props;
-        
+
         return (
             <motion.button
                 ref={ref}

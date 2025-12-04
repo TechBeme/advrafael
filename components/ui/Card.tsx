@@ -64,7 +64,7 @@ export const MotionCard = forwardRef<HTMLDivElement, CardProps>(
     }, ref) {
         // Separate motion props from HTML div props to avoid type conflicts
         const { onAnimationStart, onDragStart, onDragEnd, onDrag, ...divProps } = props;
-        
+
         return (
             <motion.div
                 ref={ref}
