@@ -22,25 +22,25 @@ function getRandomInitialMessage() {
     return INITIAL_MESSAGES[Math.floor(Math.random() * INITIAL_MESSAGES.length)];
 }
 
-// Configurações de delay para parecer humano
-const READING_SPEED_MS_PER_CHAR = 35; // ~170 palavras/min (leitura normal)
-const TYPING_INDICATOR_MIN_MS = 800; // Mínimo de tempo mostrando "digitando"
-const TYPING_INDICATOR_MAX_MS = 3500; // Máximo de tempo mostrando "digitando"
-const BASE_THINKING_DELAY_MS = 400; // Delay base antes de começar a "digitar"
+// Configurações de delay para parecer humano (valores mais altos = mais lento)
+const READING_SPEED_MS_PER_CHAR = 50; // ~120 palavras/min (leitura atenta)
+const TYPING_INDICATOR_MIN_MS = 1500; // Mínimo de tempo mostrando "digitando"
+const TYPING_INDICATOR_MAX_MS = 5000; // Máximo de tempo mostrando "digitando"
+const BASE_THINKING_DELAY_MS = 800; // Delay base antes de começar a "digitar"
 
 // Calcula delay de leitura baseado no tamanho da mensagem do usuário
 function calculateReadingDelay(userMessage: string): number {
     const charCount = userMessage.length;
     // Tempo base + tempo proporcional ao tamanho
     const readingTime = BASE_THINKING_DELAY_MS + charCount * READING_SPEED_MS_PER_CHAR;
-    // Limita entre 500ms e 4000ms
-    return Math.min(Math.max(readingTime, 500), 4000);
+    // Limita entre 1000ms e 5000ms
+    return Math.min(Math.max(readingTime, 1000), 5000);
 }
 
 // Calcula delay de "digitação" baseado no tamanho da resposta
 function calculateTypingDelay(responseLength: number): number {
-    // Simula digitação: ~200ms por caractere, com variação
-    const baseTyping = responseLength * 15;
+    // Simula digitação: ~25ms por caractere, com variação
+    const baseTyping = responseLength * 25;
     // Adiciona variação aleatória de ±20%
     const variation = baseTyping * (0.8 + Math.random() * 0.4);
     return Math.min(Math.max(variation, TYPING_INDICATOR_MIN_MS), TYPING_INDICATOR_MAX_MS);
