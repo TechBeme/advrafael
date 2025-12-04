@@ -1,5 +1,6 @@
 import { FiMail } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import Image from "next/image";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Container, Section } from "@/components/ui/Section";
@@ -28,10 +29,20 @@ export default function ContatoPage() {
                 title="Contato"
                 description="Envie uma mensagem ou utilize os canais diretos. O retorno ocorre após triagem inicial."
             />
-            <Section className="pb-20">
+            <Section className="relative overflow-hidden pb-20">
+                <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-white to-accent/5" />
+                <div className="absolute inset-0 -z-20 opacity-70">
+                    <Image
+                        src="/images/hero-office-1.jpeg"
+                        alt="Escritório de Rafael Vieira"
+                        fill
+                        priority
+                        className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white" />
+                </div>
                 <Container className="space-y-8">
-                    {/* eslint-disable-next-line tailwindcss/classnames-order */}
-                    <FadeIn className="grid md:grid-cols-[1.1fr_0.9fr] md:items-center gap-6 rounded-2xl p-6 md:p-8 bg-gradient-to-br from-primary/8 via-white to-accent/5 shadow-soft">
+                    <FadeIn className="grid gap-6 rounded-2xl border border-border/60 bg-white/85 p-6 shadow-soft backdrop-blur md:grid-cols-[1.1fr_0.9fr] md:items-center md:p-8">
                         <div className="space-y-3">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                                 Triagem em etapas
@@ -51,7 +62,7 @@ export default function ContatoPage() {
                                     rel="noreferrer"
                                 >
                                     <FaWhatsapp className="h-5 w-5" aria-hidden="true" />
-                                    WhatsApp direto
+                                    WhatsApp
                                 </a>
                                 <a
                                     className={buttonClasses({ variant: "secondary", size: "md" })}

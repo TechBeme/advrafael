@@ -4,7 +4,7 @@ import { Container } from "../ui/Section";
 
 export default function Header() {
     return (
-        <header className="sticky top-0 z-30 border-b border-border/80 bg-white/90 backdrop-blur">
+        <header className="sticky top-0 z-30 border-b border-border/80 bg-white/85 shadow-sm backdrop-blur">
             <Container className="flex items-center justify-between gap-4 py-4">
                 <Link
                     href="/"
@@ -16,10 +16,10 @@ export default function Header() {
                     </span>
                     <span className="leading-tight">
                         <span className="block font-display text-lg font-semibold text-ink transition group-hover:text-primary">
-                            Rafael Vieira
+                            Dr. Rafael Vieira
                         </span>
-                        <span className="block text-xs font-medium uppercase tracking-[0.2em] text-muted">
-                            Advocacia Cível e do Consumidor · BH/MG
+                        <span className="block text-[11px] font-semibold uppercase tracking-[0.24em] text-muted">
+                            Advogado
                         </span>
                     </span>
                 </Link>

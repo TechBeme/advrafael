@@ -25,7 +25,7 @@ export default function Footer() {
             <Container className="grid gap-10 py-12 md:grid-cols-3">
                 <div className="space-y-3">
                     <p className="inline-flex items-center rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                        Rafael Vieira
+                        Dr. Rafael Vieira
                     </p>
                     <h3 className="text-xl font-semibold text-ink">Advocacia Cível e do Consumidor</h3>
                     <p className="text-sm text-muted">
@@ -89,7 +89,7 @@ export default function Footer() {
             </Container>
             <div className="border-t border-border/70 bg-card/70">
                 <Container className="flex flex-col gap-2 py-4 text-xs text-muted md:flex-row md:items-center md:justify-between">
-                    <p>© {new Date().getFullYear()} Rafael Vieira. Todos os direitos reservados.</p>
+                    <p>© {new Date().getFullYear()} Dr. Rafael Vieira. Todos os direitos reservados.</p>
                 </Container>
             </div>
         </footer>
