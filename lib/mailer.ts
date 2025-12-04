@@ -30,9 +30,9 @@ export async function sendContactMessage(payload: ContactPayload) {
         auth:
             mailConfig.user && mailConfig.pass
                 ? {
-                      user: mailConfig.user,
-                      pass: mailConfig.pass,
-                  }
+                    user: mailConfig.user,
+                    pass: mailConfig.pass,
+                }
                 : undefined,
     });
 
