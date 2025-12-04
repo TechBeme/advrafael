@@ -18,7 +18,7 @@ export const siteConfig = {
         "consultoria empresarial",
     ],
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://advrafael.com.br",
-    ogImage: "/images/og-image.png",
+    ogImage: "/og-image.jpeg",
     logo: "/images/logo.png",
     author: "Dr. Rafael Vieira",
     locale: "pt_BR",
