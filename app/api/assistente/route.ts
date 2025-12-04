@@ -84,7 +84,7 @@ export async function POST(request: Request) {
         const slotsText = buildAvailabilitySummary(slots);
 
         const result = streamText({
-            model: google("gemini-2.0-flash"),
+            model: google("gemini-2.5-flash"),
             system: `${systemPrompt}\n${slotsText}`,
             messages: convertToModelMessages(messages),
             tools: {

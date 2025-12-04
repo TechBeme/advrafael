@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
         // Use Gemini to transcribe the audio
         const result = await generateText({
-            model: google("gemini-2.0-flash"),
+            model: google("gemini-2.5-flash"),
             messages: [
                 {
                     role: "user",
