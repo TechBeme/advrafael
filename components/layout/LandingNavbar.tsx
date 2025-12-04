@@ -89,7 +89,7 @@ export function LandingNavbar() {
                         >
                             <div className="relative h-12 w-12 overflow-hidden rounded-xl shadow-lg transition-transform group-hover:scale-105">
                                 <Image
-                                    src="/images/logo.jpeg"
+                                    src="/images/logo.png"
                                     alt="Logo Dr. Rafael Vieira"
                                     fill
                                     className="object-cover"

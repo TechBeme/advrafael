@@ -23,7 +23,7 @@ export function FooterSection() {
                         <div className="flex items-center gap-4 text-center md:text-left">
                             <div className="relative h-14 w-14 overflow-hidden rounded-xl shadow-md">
                                 <Image
-                                    src="/images/logo.jpeg"
+                                    src="/images/logo.png"
                                     alt="Logo Dr. Rafael Vieira"
                                     fill
                                     className="object-cover"
