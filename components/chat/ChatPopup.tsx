@@ -9,7 +9,7 @@ import { FiMessageCircle, FiX, FiSend, FiMic, FiSquare } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
 
 const INITIAL_MESSAGES = [
-    'Oi, tudo bem? Aqui é a Clara, do escritório do Dr. Rafael. Em que posso te ajudar?',
+    'Oi! Aqui é a Clara, do escritório do Dr. Rafael. Você está buscando ajuda com alguma questão jurídica? Pode ser contrato, família, consumidor...',
 ];
 
 // Configurações de delay para parecer humano
@@ -59,7 +59,7 @@ export function ChatPopup() {
     });
 
     const actualIsLoading = status === 'streaming' || status === 'submitted';
-    
+
     // Combina loading real com delays artificiais
     const isLoading = actualIsLoading || isThinking || isTypingDelayed;
 
@@ -110,16 +110,16 @@ export function ChatPopup() {
     const sendMessageWithDelay = useCallback((text: string) => {
         const userMessageLength = text.length;
         lastUserMessageRef.current = text;
-        
+
         // Primeiro: mostra que está "lendo" a mensagem
         setIsThinking(true);
-        
+
         const readingDelay = calculateReadingDelay(text);
-        
+
         setTimeout(() => {
             setIsThinking(false);
             setIsTypingDelayed(true);
-            
+
             // Envia a mensagem real para a API
             sendMessage({
                 role: 'user',
@@ -145,7 +145,7 @@ export function ChatPopup() {
             if (lastMessage?.role === 'assistant') {
                 const responseText = getMessageContent(lastMessage);
                 const typingDelay = calculateTypingDelay(responseText.length);
-                
+
                 setTimeout(() => {
                     setIsTypingDelayed(false);
                 }, typingDelay);
