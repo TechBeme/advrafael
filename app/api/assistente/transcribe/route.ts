@@ -34,8 +34,8 @@ export async function POST(request: Request) {
                         {
                             type: "file",
                             data: base64Audio,
-                            mimeType: audioFile.type || "audio/webm",
-                        },
+                            mediaType: audioFile.type || "audio/webm",
+                        } as const,
                     ],
                 },
             ],

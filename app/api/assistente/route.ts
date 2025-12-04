@@ -87,7 +87,6 @@ export async function POST(request: Request) {
             model: google("gemini-2.0-flash"),
             system: `${systemPrompt}\n${slotsText}`,
             messages: convertToModelMessages(messages),
-            maxSteps: 4,
             tools: {
                 agendar: scheduleTool,
             },

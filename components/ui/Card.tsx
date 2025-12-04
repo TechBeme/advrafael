@@ -62,6 +62,9 @@ export const MotionCard = forwardRef<HTMLDivElement, CardProps>(
         glow = false,
         ...props
     }, ref) {
+        // Separate motion props from HTML div props to avoid type conflicts
+        const { onAnimationStart, onDragStart, onDragEnd, onDrag, ...divProps } = props;
+        
         return (
             <motion.div
                 ref={ref}
@@ -77,7 +80,7 @@ export const MotionCard = forwardRef<HTMLDivElement, CardProps>(
                     boxShadow: "0 8px 30px rgb(0 0 0 / 0.08)",
                 } : undefined}
                 transition={{ duration: 0.3 }}
-                {...props}
+                {...divProps}
             >
                 {children}
             </motion.div>

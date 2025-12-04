@@ -113,6 +113,9 @@ export const MotionButton = forwardRef<HTMLButtonElement, ButtonProps>(
         },
         ref
     ) {
+        // Separate motion props from HTML button props to avoid type conflicts
+        const { onAnimationStart, onDragStart, onDragEnd, onDrag, ...buttonProps } = props;
+        
         return (
             <motion.button
                 ref={ref}
@@ -121,7 +124,7 @@ export const MotionButton = forwardRef<HTMLButtonElement, ButtonProps>(
                 whileHover={{ scale: disabled ? 1 : 1.02 }}
                 whileTap={{ scale: disabled ? 1 : 0.98 }}
                 transition={{ duration: 0.2 }}
-                {...props}
+                {...buttonProps}
             >
                 {loading ? (
                     <>
