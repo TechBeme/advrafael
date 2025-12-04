@@ -45,10 +45,19 @@ export function ContactSection() {
         setSubmitStatus('idle');
 
         try {
+            // Mapear campos do formulário para o formato da API
+            const payload = {
+                name: data.nome,
+                email: `${data.whatsapp.replace(/\D/g, '')}@whatsapp.temp`, // Email temporário baseado no WhatsApp
+                phone: data.whatsapp,
+                reason: 'Contato via site',
+                message: data.mensagem,
+            };
+
             const response = await fetch('/api/contato', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
+                body: JSON.stringify(payload),
             });
 
             if (!response.ok) throw new Error('Erro ao enviar');
