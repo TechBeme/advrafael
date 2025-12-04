@@ -57,13 +57,56 @@ export const metadata: Metadata = {
         template: `%s | ${siteConfig.shortName}`,
     },
     description: siteConfig.description,
+    keywords: siteConfig.keywords,
+    authors: [{ name: siteConfig.author }],
+    creator: siteConfig.author,
+    publisher: siteConfig.author,
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+        },
+    },
     openGraph: {
         title: siteConfig.name,
         description: siteConfig.description,
         url: siteConfig.url,
         siteName: siteConfig.name,
-        images: [`${siteConfig.url}${siteConfig.ogImage}`],
+        images: [
+            {
+                url: `${siteConfig.url}${siteConfig.ogImage}`,
+                width: 1200,
+                height: 630,
+                alt: siteConfig.name,
+            },
+        ],
+        locale: siteConfig.locale,
         type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: siteConfig.name,
+        description: siteConfig.description,
+        images: [`${siteConfig.url}${siteConfig.ogImage}`],
+        creator: siteConfig.twitterHandle,
+    },
+    icons: {
+        icon: [
+            { url: "/favicon.ico", sizes: "any" },
+            { url: "/images/logo.png", type: "image/png" },
+        ],
+        apple: [
+            { url: "/images/logo.png", sizes: "180x180", type: "image/png" },
+        ],
+    },
+    manifest: "/manifest.json",
+    verification: {
+        // google: "seu-codigo-google-search-console",
     },
 };
 
@@ -76,6 +119,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR">
+            <head>
+                <meta name="theme-color" content="#069494" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta name="format-detection" content="telephone=no" />
+                <link rel="icon" href="/favicon.ico" sizes="any" />
+                <link rel="icon" href="/images/logo.png" type="image/png" />
+                <link rel="apple-touch-icon" href="/images/logo.png" />
+            </head>
             <body className={`${sansFont.variable} ${displayFont.variable}`}>
                 {children}
             </body>
