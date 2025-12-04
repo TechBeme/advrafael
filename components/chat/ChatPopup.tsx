@@ -5,7 +5,7 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
-import { FiMessageCircle, FiX, FiSend, FiUser, FiMic, FiSquare } from 'react-icons/fi';
+import { FiMessageCircle, FiX, FiSend, FiMic, FiSquare } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
 
 const INITIAL_MESSAGES = [
