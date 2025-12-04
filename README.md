@@ -61,7 +61,7 @@ A Clara é uma assistente conversacional que:
   - ⏰ Horário comercial: 9h-12h e 13h-18h (Brasília)
   - 📆 Apenas dias úteis (sem feriados nacionais)
   - ⏳ Mínimo 24h de antecedência
-  - 🕐 Consultas de 30 minutos com 15 min de intervalo
+  - 🕐 Consultas de 1 hora com 15 min de intervalo
 
 ```
 📱 Usuário: "Preciso de ajuda com um contrato"

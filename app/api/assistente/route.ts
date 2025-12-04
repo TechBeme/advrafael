@@ -10,7 +10,7 @@ import {
 
 export const maxDuration = 30;
 
-const SLOT_DURATION_MINUTES = 30;
+const SLOT_DURATION_MINUTES = 60;
 const MIN_HOURS_ADVANCE = 24; // Mínimo de 24h de antecedência
 const MIN_GAP_MINUTES = 15; // Mínimo de 15 min entre agendamentos
 const TIMEZONE = "America/Sao_Paulo";
@@ -214,7 +214,7 @@ NUNCA FAÇA ISSO:
 - Horário: Segunda a Sexta, 9h-12h e 13h-18h.
 - NÃO agende fins de semana ou feriados.
 - Mínimo 24h de antecedência.
-- Consultas de 30 min, intervalo de 15 min entre elas.
+- Consultas de 1 hora, intervalo de 15 min entre elas.
 - Formato ISO: 2025-12-05T10:00:00-03:00
 - Após agendar: "O Dr. Rafael ou alguém da equipe confirma por WhatsApp."
 
@@ -318,7 +318,7 @@ const viewCalendarTool = tool({
             regras: {
                 antecedenciaMinima: "24 horas",
                 intervaloEntreConsultas: "15 minutos",
-                duracaoConsulta: "30 minutos",
+                duracaoConsulta: "1 hora",
                 diasIndisponiveis: "Sábados, domingos e feriados",
             },
             feriadosProximos: feriadosProximos.length > 0 ? feriadosProximos : undefined,
@@ -362,7 +362,7 @@ const scheduleTool = tool({
                 };
             }
 
-            // Calcular horário de término (30 minutos depois)
+            // Calcular horário de término (1 hora depois)
             const startDate = new Date(input.startDateTime);
             const endDate = new Date(startDate.getTime() + SLOT_DURATION_MINUTES * 60 * 1000);
             const endDateTime = endDate.toISOString();
