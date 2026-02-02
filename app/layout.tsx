@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import { siteConfig } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const displayFont = localFont({
     src: [
@@ -127,6 +129,8 @@ export default function RootLayout({
             </head>
             <body className={`${sansFont.variable} ${displayFont.variable}`}>
                 {children}
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
