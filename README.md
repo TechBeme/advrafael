@@ -403,13 +403,17 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 Este software é fornecido "como está", sem garantias de qualquer tipo. O desenvolvedor não se responsabiliza por danos diretos ou indiretos resultantes do uso deste código.
 
+⚖️ Este projeto foi desenvolvido respeitando as normas da OAB e a LGPD.
+
 ---
 
 <div align="center">
 
-**Desenvolvido com ⚖️ por [Rafael Vieira (TechBeme)](https://github.com/TechBeme)**
+**Desenvolvido por [Rafael Vieira (TechBeme)](https://github.com/TechBeme)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-TechBeme-181717?logo=github)](https://github.com/TechBeme)
+[![Fiverr](https://img.shields.io/badge/Fiverr-Tech__Be-1DBF73?logo=fiverr)](https://www.fiverr.com/tech_be)
+[![Upwork](https://img.shields.io/badge/Upwork-Profile-14a800?logo=upwork)](https://www.upwork.com/freelancers/~01f0abcf70bbd95376)
 [![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
 
 © 2026 Rafael Vieira. Todos os direitos reservados.

@@ -403,13 +403,17 @@ See the [LICENSE](LICENSE) file for more details.
 
 This software is provided "as is", without warranties of any kind. The developer is not responsible for direct or indirect damages resulting from the use of this code.
 
+⚖️ This project was developed in compliance with OAB standards and LGPD (Brazilian Data Protection Law).
+
 ---
 
 <div align="center">
 
-**Developed with ⚖️ by [Rafael Vieira (TechBeme)](https://github.com/TechBeme)**
+**Developed by [Rafael Vieira (TechBeme)](https://github.com/TechBeme)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-TechBeme-181717?logo=github)](https://github.com/TechBeme)
+[![Fiverr](https://img.shields.io/badge/Fiverr-Tech__Be-1DBF73?logo=fiverr)](https://www.fiverr.com/tech_be)
+[![Upwork](https://img.shields.io/badge/Upwork-Profile-14a800?logo=upwork)](https://www.upwork.com/freelancers/~01f0abcf70bbd95376)
 [![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
 
 © 2026 Rafael Vieira. All rights reserved.
