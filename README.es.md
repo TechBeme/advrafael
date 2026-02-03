@@ -416,6 +416,4 @@ Este software se proporciona "tal cual", sin garantías de ningún tipo. El desa
 [![Upwork](https://img.shields.io/badge/Upwork-Profile-14a800?logo=upwork)](https://www.upwork.com/freelancers/~01f0abcf70bbd95376)
 [![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
 
-© 2026 Rafael Vieira. Todos los derechos reservados.
-
 </div>
