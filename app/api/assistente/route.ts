@@ -7,6 +7,7 @@ import {
     createCalendarEvent,
     isSlotAvailable,
 } from "@/lib/assistant/google-calendar";
+import { googleGenerativeAiModel } from "@/lib/assistant/model";
 
 export const maxDuration = 30;
 
@@ -506,13 +507,13 @@ export async function POST(request: Request) {
             },
         });
 
-        console.log("[API:assistente] Iniciando stream com Gemini 2.5 Flash...");
+        console.log("[API:assistente] Iniciando stream com modelo:", googleGenerativeAiModel);
 
         const systemPrompt = buildSystemPrompt();
         console.log("[API:assistente] Data atual no prompt:", systemPrompt.match(/DATA E HORA ATUAL: (.+)/)?.[1]);
 
         const result = streamText({
-            model: google("gemini-2.5-flash"),
+            model: google(googleGenerativeAiModel),
             system: systemPrompt,
             messages: convertToModelMessages(messages),
             tools: {

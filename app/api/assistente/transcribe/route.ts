@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
+import { googleGenerativeAiModel } from "@/lib/assistant/model";
 
 export const maxDuration = 30;
 
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
 
         // Use Gemini to transcribe the audio
         const result = await generateText({
-            model: google("gemini-2.5-flash"),
+            model: google(googleGenerativeAiModel),
             messages: [
                 {
                     role: "user",
