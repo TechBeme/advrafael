@@ -2,7 +2,7 @@
 
 # ⚖️ Dr. Rafael Vieira — Attorney at Law
 
-**Institutional website with intelligent virtual assistant and automated scheduling**
+**Institutional website with an AI assistant and Google Calendar scheduling**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -34,7 +34,7 @@
 
 ## 🎯 About the Project
 
-Modern institutional landing page for a law firm, developed with a focus on **conversion** and **user experience**. The highlight is **Clara**, an AI virtual assistant that naturally converses with visitors, understands their legal needs, and schedules consultations directly in the attorney's Google Calendar.
+Landing page for a law firm with **Clara**, an AI assistant that collects the visitor's legal need and schedules consultations in the attorney's Google Calendar.
 
 ### ✨ Highlights
 
@@ -43,7 +43,7 @@ Modern institutional landing page for a law firm, developed with a focus on **co
 | 🤖 **AI Assistant** | Clara uses Gemini 2.5 Flash for natural conversations in Portuguese |
 | 📅 **Automated Scheduling** | Integration with Google Calendar via Service Account |
 | 🎙️ **Voice Input** | Real-time audio transcription with Whisper |
-| 📱 **Responsive Design** | Fluid interface from mobile to desktop |
+| 📱 **Responsive Design** | Mobile and desktop layouts |
 | ⚡ **Performance** | SSR with Next.js 16 and image optimization |
 | ♿ **Accessibility** | WCAG AA compliance, skip links and visible focus |
 | 🔒 **Compliance** | LGPD and OAB standards respected |
@@ -86,7 +86,7 @@ Clara is a conversational assistant that:
 |---------|----------|
 | **Hero** | Presentation with credentials (UFMG, Public Defender's Office, DAJ) |
 | **Practice Areas** | Civil, Consumer, and Family Law with detailed topics |
-| **About** | Professional background and service differentials |
+| **About** | Legal career and approach to client service |
 | **Process** | How the service works in 4 steps |
 | **FAQ** | Frequently asked questions in accordion |
 | **Contact** | Validated form + WhatsApp integration |
@@ -109,7 +109,7 @@ Clara is a conversational assistant that:
 | React | 19.2.1 | UI library |
 | TypeScript | 5.x | Static typing |
 | Tailwind CSS | 3.4 | Utility-first styling |
-| Motion | 12.x | Fluid animations |
+| Motion | 12.x | Entry and transition animations |
 | React Icons | 5.5 | Icons (Feather + Font Awesome) |
 
 ### Backend & AI

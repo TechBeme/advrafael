@@ -2,7 +2,7 @@
 
 # ⚖️ Dr. Rafael Vieira — Abogado
 
-**Sitio institucional con asistente virtual inteligente y programación automatizada**
+**Sitio institucional con asistente de IA y programación en Google Calendar**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -21,7 +21,6 @@
 ## 📋 Índice
 
 - [Sobre el Proyecto](#-sobre-el-proyecto)
-- [Sobre el Desarrollador](#-sobre-el-desarrollador)
 - [Funcionalidades](#-funcionalidades)
 - [Tecnologías](#-tecnologías)
 - [Arquitectura](#-arquitectura)
@@ -35,7 +34,7 @@
 
 ## 🎯 Sobre el Proyecto
 
-Landing page institucional moderna para despacho de abogados, desarrollada con enfoque en **conversión** y **experiencia del usuario**. El diferencial es **Clara**, asistente virtual con IA que conversa naturalmente con visitantes, comprende sus necesidades jurídicas y programa consultas directamente en el Google Calendar del abogado.
+Landing page para un despacho de abogados con **Clara**, una asistente de IA que recopila la necesidad jurídica del visitante y programa consultas en el Google Calendar del abogado.
 
 ### ✨ Aspectos Destacados
 
@@ -44,46 +43,10 @@ Landing page institucional moderna para despacho de abogados, desarrollada con e
 | 🤖 **Asistente IA** | Clara usa Gemini 2.5 Flash para conversaciones naturales en portugués |
 | 📅 **Programación Automática** | Integración con Google Calendar vía Service Account |
 | 🎙️ **Entrada por Voz** | Transcripción de audio en tiempo real con Whisper |
-| 📱 **Diseño Responsivo** | Interfaz fluida desde móvil hasta escritorio |
+| 📱 **Diseño Responsivo** | Layouts para móvil y escritorio |
 | ⚡ **Rendimiento** | SSR con Next.js 16 y optimización de imágenes |
 | ♿ **Accesibilidad** | Cumplimiento WCAG AA, skip links y foco visible |
 | 🔒 **Conformidad** | LGPD y normas de OAB respetadas |
-
----
-
-## 👨‍💻 Sobre el Desarrollador
-
-<div align="center">
-
-**Desarrollado por Rafael Vieira (TechBeme)**
-
-[![GitHub](https://img.shields.io/badge/GitHub-TechBeme-181717?logo=github)](https://github.com/TechBeme)
-[![Fiverr](https://img.shields.io/badge/Fiverr-Tech__Be-1DBF73?logo=fiverr)](https://www.fiverr.com/tech_be)
-[![Upwork](https://img.shields.io/badge/Upwork-Profile-14a800?logo=upwork)](https://www.upwork.com/freelancers/~01f0abcf70bbd95376)
-[![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
-
-**Desarrollador Full-Stack & Especialista en Automatización con IA**
-
-Especializado en **web scraping**, **sistemas de automatización**, **aplicaciones web modernas** e **integraciones de IA**.
-
-### 💼 Competencias Principales
-
-- 🔍 Web Scraping & Extracción de Datos
-- ⚡ Automatización de Procesos & Workflows
-- 💻 Desarrollo Full-Stack (Next.js, React, Python, TypeScript)
-- 🤖 Integraciones de IA (OpenAI, Anthropic, Google Gemini, sistemas RAG)
-- 📊 Diseño & Optimización de Bases de Datos
-- 🎨 Desarrollo de UI/UX Modernas
-
-### 🌍 Idiomas
-
-🇺🇸 **Inglés** • 🇧🇷 **Portugués** • 🇪🇸 **Español**
-
-### 📬 Contacto
-
-**Email**: [contact@techbe.me](mailto:contact@techbe.me)
-
-</div>
 
 ---
 
@@ -146,7 +109,7 @@ Clara es una asistente conversacional que:
 | React | 19.2.1 | Biblioteca de UI |
 | TypeScript | 5.x | Tipado estático |
 | Tailwind CSS | 3.4 | Estilización utility-first |
-| Motion | 12.x | Animaciones fluidas |
+| Motion | 12.x | Animaciones de entrada y transición |
 | React Icons | 5.5 | Iconos (Feather + Font Awesome) |
 
 ### Backend & IA

@@ -2,7 +2,7 @@
 
 # ⚖️ Dr. Rafael Vieira — Advogado
 
-**Site institucional com assistente virtual inteligente e agendamento automatizado**
+**Site institucional com assistente de IA e agendamento pelo Google Calendar**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -34,7 +34,7 @@
 
 ## 🎯 Sobre o Projeto
 
-Landing page institucional moderna para escritório de advocacia, desenvolvida com foco em **conversão** e **experiência do usuário**. O diferencial é a **Clara**, assistente virtual com IA que conversa naturalmente com visitantes, entende suas necessidades jurídicas e agenda consultorias diretamente no Google Calendar do advogado.
+Landing page para escritório de advocacia com a **Clara**, uma assistente de IA que coleta a necessidade jurídica do visitante e agenda consultorias no Google Calendar do advogado.
 
 ### ✨ Destaques
 
@@ -43,7 +43,7 @@ Landing page institucional moderna para escritório de advocacia, desenvolvida c
 | 🤖 **Assistente IA** | Clara usa Gemini 2.5 Flash para conversas naturais em português |
 | 📅 **Agendamento Automático** | Integração com Google Calendar via Service Account |
 | 🎙️ **Entrada por Voz** | Transcrição de áudio em tempo real com Whisper |
-| 📱 **Design Responsivo** | Interface fluida do mobile ao desktop |
+| 📱 **Design Responsivo** | Layouts para mobile e desktop |
 | ⚡ **Performance** | SSR com Next.js 16 e otimização de imagens |
 | ♿ **Acessibilidade** | Conformidade WCAG AA, skip links e foco visível |
 | 🔒 **Conformidade** | LGPD e normas da OAB respeitadas |
@@ -86,7 +86,7 @@ A Clara é uma assistente conversacional que:
 |-------|----------|
 | **Hero** | Apresentação com credenciais (UFMG, Defensoria Pública, DAJ) |
 | **Áreas de Atuação** | Direito Civil, Consumidor e Família com tópicos detalhados |
-| **Sobre** | Trajetória profissional e diferencial do atendimento |
+| **Sobre** | Trajetória na advocacia e forma de atendimento |
 | **Processo** | Como funciona o atendimento em 4 etapas |
 | **FAQ** | Perguntas frequentes em acordeão |
 | **Contato** | Formulário validado + integração WhatsApp |
@@ -109,7 +109,7 @@ A Clara é uma assistente conversacional que:
 | React | 19.2.1 | Biblioteca de UI |
 | TypeScript | 5.x | Tipagem estática |
 | Tailwind CSS | 3.4 | Estilização utility-first |
-| Motion | 12.x | Animações fluidas |
+| Motion | 12.x | Animações de entrada e transição |
 | React Icons | 5.5 | Ícones (Feather + Font Awesome) |
 
 ### Backend & IA
@@ -380,4 +380,3 @@ Este software é fornecido "como está", sem garantias de qualquer tipo. O desen
 [![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
 
 </div>
-
