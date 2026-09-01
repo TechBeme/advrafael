@@ -21,7 +21,6 @@
 ## 📋 Sumário
 
 - [Sobre o Projeto](#-sobre-o-projeto)
-- [Sobre o Desenvolvedor](#-sobre-o-desenvolvedor)
 - [Funcionalidades](#-funcionalidades)
 - [Tecnologias](#-tecnologias)
 - [Arquitetura](#-arquitetura)
@@ -48,42 +47,6 @@ Landing page institucional moderna para escritório de advocacia, desenvolvida c
 | ⚡ **Performance** | SSR com Next.js 16 e otimização de imagens |
 | ♿ **Acessibilidade** | Conformidade WCAG AA, skip links e foco visível |
 | 🔒 **Conformidade** | LGPD e normas da OAB respeitadas |
-
----
-
-## 👨‍💻 Sobre o Desenvolvedor
-
-<div align="center">
-
-**Desenvolvido por Rafael Vieira (TechBeme)**
-
-[![GitHub](https://img.shields.io/badge/GitHub-TechBeme-181717?logo=github)](https://github.com/TechBeme)
-[![Fiverr](https://img.shields.io/badge/Fiverr-Tech__Be-1DBF73?logo=fiverr)](https://www.fiverr.com/tech_be)
-[![Upwork](https://img.shields.io/badge/Upwork-Profile-14a800?logo=upwork)](https://www.upwork.com/freelancers/~01f0abcf70bbd95376)
-[![Email](https://img.shields.io/badge/Email-contact@techbe.me-EA4335?logo=gmail)](mailto:contact@techbe.me)
-
-**Desenvolvedor Full-Stack & Especialista em Automação com IA**
-
-Especializado em **web scraping**, **sistemas de automação**, **aplicações web modernas** e **integrações de IA**.
-
-### 💼 Principais Competências
-
-- 🔍 Web Scraping & Extração de Dados
-- ⚡ Automação de Processos & Workflows
-- 💻 Desenvolvimento Full-Stack (Next.js, React, Python, TypeScript)
-- 🤖 Integrações de IA (OpenAI, Anthropic, Google Gemini, sistemas RAG)
-- 📊 Design & Otimização de Bancos de Dados
-- 🎨 Desenvolvimento de UI/UX Modernas
-
-### 🌍 Idiomas
-
-🇺🇸 **Inglês** • 🇧🇷 **Português** • 🇪🇸 **Espanhol**
-
-### 📬 Contato
-
-**Email**: [contact@techbe.me](mailto:contact@techbe.me)
-
-</div>
 
 ---
 
